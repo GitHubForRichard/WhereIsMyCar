@@ -38,7 +38,7 @@ public class SearchActivity extends AppCompatActivity {
         mySpinnerAdpt2.setDropDownViewResource(R.layout.spinner_layout);
         searchSpinner.setAdapter(mySpinnerAdpt2);
 
-        //user click search
+
         
     }
 }
