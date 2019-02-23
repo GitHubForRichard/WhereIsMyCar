@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private EditText etemail;
     private EditText etPassword;
     private Button btnLogin;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         //when email && pwd match
         if(email.equals("admin") && pwd.equals("123")) {
             //let user enter next activity from this activity
-            Intent intent = new Intent(MainActivity.this,SearchActivity.class );
+            Intent intent = new Intent(LoginActivity.this,SearchActivity.class );
             startActivity(intent);
         }else{
             //disable login button if user enter wrong email/pwd 5 times
