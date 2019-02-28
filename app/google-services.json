@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "474710324235",
+    "firebase_url": "https://whereismycar-68b12.firebaseio.com",
+    "project_id": "whereismycar-68b12",
+    "storage_bucket": "whereismycar-68b12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474710324235:android:5e0117949324ff30",
+        "android_client_info": {
+          "package_name": "com.example.richa.buttonclickapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474710324235-bprs6ci7r1qpe2v8skvgqunedq8tverd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.richa.buttonclickapp",
+            "certificate_hash": "4f1695b229cd7a76d73807221b988cd3ef105c3e"
+          }
+        },
+        {
+          "client_id": "474710324235-phd8mknur2udglcdqgn6kvegjtkci3fj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrg-4kE3aistDEucLgzEpa_ocNZNx7U9Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "474710324235-dk8arvmur2mbevr59rddkekovfgcc492.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
