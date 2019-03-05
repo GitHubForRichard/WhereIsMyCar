@@ -65,17 +65,31 @@ public class UpdateCarInfoActivity extends AppCompatActivity {
         String licensePlateStr = licensePlate.getText().toString().trim();
         String modelStr = model.getText().toString().trim();
         String colorStr = color.getText().toString().trim();
-        int yearInt = Integer.parseInt(year.getText().toString());
 
         FirebaseUser currUser = firebaseAuth.getCurrentUser();
 
         // Update users' car information
-        databaseReference.child("users").child(currUser.getUid()).child("licensePlate").setValue(licensePlateStr);
-        databaseReference.child("users").child(currUser.getUid()).child("model").setValue(modelStr);
-        databaseReference.child("users").child(currUser.getUid()).child("year").setValue(yearInt);
-        databaseReference.child("users").child(currUser.getUid()).child("color").setValue(colorStr);
+        if(licensePlateStr.length() > 0)
+        {
+            databaseReference.child("users").child(currUser.getUid()).child("licensePlate").setValue(licensePlateStr);
+        }
 
+        if(modelStr.length() > 0)
+        {
+            databaseReference.child("users").child(currUser.getUid()).child("model").setValue(modelStr);
+        }
 
-        Log.d("TAG", "Successfully added Car Plate............................");
+        if(year.getText().toString().trim().length() > 0)
+        {
+            int yearInt = Integer.parseInt(year.getText().toString());
+            databaseReference.child("users").child(currUser.getUid()).child("year").setValue(yearInt);
+        }
+
+        if(colorStr.length() > 0)
+        {
+            databaseReference.child("users").child(currUser.getUid()).child("color").setValue(licensePlateStr);
+        }
+
+        Log.d("TAG", "Successfully added Car Info............................");
     }
 }

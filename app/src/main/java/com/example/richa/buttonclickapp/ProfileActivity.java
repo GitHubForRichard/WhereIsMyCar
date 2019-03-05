@@ -21,6 +21,10 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private TextView textViewLicensePlate;
+    private TextView textViewModel;
+    private TextView textViewYear;
+    private TextView textViewColor;
+
     private Button buttonLogout;
     private Button buttonUpdate;
     private DatabaseReference databaseReference;
@@ -41,6 +45,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         textViewLicensePlate = (TextView) findViewById(R.id.textViewLicensePlate);
+        textViewModel = (TextView) findViewById(R.id.textViewModel);
+        textViewYear = (TextView) findViewById(R.id.textViewYear);
+        textViewColor = (TextView) findViewById(R.id.textViewColor);
+
         buttonLogout = (Button) findViewById(R.id.Logout);
         buttonUpdate = (Button) findViewById(R.id.buttonUpdateProfile);
 
@@ -51,6 +59,44 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                String licensePlate = snapshot.getValue().toString();
+                textViewLicensePlate.setText("License Plate: " + licensePlate);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        databaseReference.child("users").child(userId).child("model").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                String model = snapshot.getValue().toString();
+                textViewModel.setText("Model: " + model);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        databaseReference.child("users").child(userId).child("year").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                String year = snapshot.getValue().toString();
+                textViewYear.setText("Year: " + year);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        databaseReference.child("users").child(userId).child("color").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                String color = snapshot.getValue().toString();
+                textViewColor.setText("Color: " + color);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
