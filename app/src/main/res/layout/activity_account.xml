@@ -7,7 +7,7 @@
     tools:context=".AccountActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_background"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:scaleType="fitXY"
@@ -17,10 +17,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/sjsu1" />
+        app:srcCompat="@drawable/sjsu_background" />
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/linearLayout"
         android:layout_width="337dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -28,27 +28,27 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/image_background"
+        app:layout_constraintTop_toTopOf="@+id/image_background"
         app:layout_constraintVertical_bias="0.3">
 
         <Button
-            android:id="@+id/buttonSignIn"
+            android:id="@+id/button_sign_in"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Sign In" />
 
         <Button
-            android:id="@+id/buttonSignUp"
+            android:id="@+id/button_sign_up"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Sign up" />
+            android:text="Sign Up" />
 
         <Button
-            android:id="@+id/buttonHelp"
+            android:id="@+id/button_help"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Help？" />
+            android:text="Help?" />
 
     </LinearLayout>
 

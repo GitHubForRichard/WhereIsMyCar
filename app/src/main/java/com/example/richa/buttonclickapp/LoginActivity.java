@@ -2,9 +2,9 @@ package com.example.richa.buttonclickapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -79,10 +79,10 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
         }
 
-        editTextEmail = (EditText) findViewById(R.id.Email);
-        editTextPassword = (EditText) findViewById(R.id.Password);
-        buttonLogin = (Button) findViewById(R.id.Login);
-        btnCancel = (Button) findViewById(R.id.btnCancel);
+        editTextEmail = findViewById(R.id.edit_email);
+        editTextPassword = findViewById(R.id.edit_password);
+        buttonLogin = findViewById(R.id.button_login);
+        btnCancel = findViewById(R.id.button_cancel);
 //        textViewSignup = (TextView) findViewById(R.id.TextViewSignup);
 
         buttonGoogleLogin = findViewById(R.id.sign_in_button);
