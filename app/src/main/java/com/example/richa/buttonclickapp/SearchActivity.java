@@ -1,7 +1,7 @@
 package com.example.richa.buttonclickapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -12,8 +12,8 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         //get reference of widgets from xml layout
-        Spinner garageSpinner=(Spinner)findViewById(R.id.garageSpinner);
-        Spinner searchSpinner=(Spinner)findViewById(R.id.searchSpinner);
+        Spinner garageSpinner = findViewById(R.id.spinner_garage);
+        Spinner searchSpinner = findViewById(R.id.spinner_search);
         //initializing a string array for garage spinner
         String[] garages=new String[]{
                 "South Garage",

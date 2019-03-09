@@ -1,8 +1,8 @@
 package com.example.richa.buttonclickapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -18,9 +18,9 @@ public class HomepageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        buttonAccount = (ImageButton) findViewById(R.id.button_Account);
-        buttonSearch = (ImageButton) findViewById(R.id.button_Search);
-        buttonMap = (ImageButton) findViewById(R.id.button_Map);
+        buttonAccount = findViewById(R.id.imgButton_account);
+        buttonSearch = findViewById(R.id.imgButton_search);
+        buttonMap = findViewById(R.id.imgButton_maps);
 
 
         View.OnClickListener buttomBarListener = new View.OnClickListener() {

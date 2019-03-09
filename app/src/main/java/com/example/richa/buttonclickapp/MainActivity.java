@@ -1,18 +1,15 @@
 package com.example.richa.buttonclickapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity{
 
-    private Button buttonRegister;
+    private Button buttonSubmit;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewLogin;
@@ -64,16 +58,16 @@ public class MainActivity extends AppCompatActivity{
 
         progressDialog = new ProgressDialog(this);
 
-        buttonRegister = (Button) findViewById(R.id.Register);
-        editTextEmail = (EditText) findViewById(R.id.Email);
-        editTextPassword = (EditText) findViewById(R.id.Password);
+        buttonSubmit = findViewById(R.id.button_submit);
+        editTextEmail = findViewById(R.id.edit_email);
+        editTextPassword = findViewById(R.id.edit_password);
 
 //        textViewLogin = (TextView) findViewById(R.id.Login);
 
         View.OnClickListener ouronClickListner = new View.OnClickListener() {
             public void onClick(View v)
             {
-                if(v == buttonRegister)
+                if (v == buttonSubmit)
                 {
                     registerUser();
                 }
@@ -86,7 +80,7 @@ public class MainActivity extends AppCompatActivity{
             }
         };
 
-        buttonRegister.setOnClickListener(ouronClickListner);
+        buttonSubmit.setOnClickListener(ouronClickListner);
 //        textViewLogin.setOnClickListener(ouronClickListner);
 
     }
