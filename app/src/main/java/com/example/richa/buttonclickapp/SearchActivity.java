@@ -7,38 +7,42 @@ import android.widget.Spinner;
 
 public class SearchActivity extends AppCompatActivity {
 
+    private Spinner garageSpinner;
+    private Spinner searchSpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        //get reference of widgets from xml layout
-        Spinner garageSpinner = findViewById(R.id.spinner_garage);
-        Spinner searchSpinner = findViewById(R.id.spinner_search);
-        //initializing a string array for garage spinner
-        String[] garages=new String[]{
+
+        initializeUI();
+    }
+
+    private void initializeUI() {
+        garageSpinner = findViewById(R.id.spinner_garage);
+        searchSpinner = findViewById(R.id.spinner_search);
+
+        //Initializing string array for garage spinner
+        String[] garages = new String[]{
                 "South Garage",
                 "North Garage",
                 "West Garage"
         };
-        //initializing a string array for search spinner
-        String[] searchOption=new String[]{
+
+        //Initializing string array for search spinner
+        String[] searchOption = new String[]{
                 "Search By Car Model",
                 "Search By Plate"
         };
-        //intializeing ArrayAdapter
-        ArrayAdapter<String> mySpinnerAdpt=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,garages);
-        //change default spinner text size
-        mySpinnerAdpt.setDropDownViewResource(R.layout.spinner_layout);
+
+        //Initializing ArrayAdapter for garages
+        ArrayAdapter<String> mySpinnerAdpt =
+                new ArrayAdapter<>(this, R.layout.spinner_layout, garages);
         garageSpinner.setAdapter(mySpinnerAdpt);
 
-        //ArrayAdapter for search option
-        //intializeing ArrayAdapter
-        ArrayAdapter<String> mySpinnerAdpt2=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,searchOption);
-        //change default spinner text size
-        mySpinnerAdpt2.setDropDownViewResource(R.layout.spinner_layout);
+        //Initializing ArrayAdapter for search option
+        ArrayAdapter<String> mySpinnerAdpt2 =
+                new ArrayAdapter<>(this, R.layout.spinner_layout, searchOption);
         searchSpinner.setAdapter(mySpinnerAdpt2);
-
-
-
     }
 }
