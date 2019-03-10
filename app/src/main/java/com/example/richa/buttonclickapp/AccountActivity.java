@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class AccountActivity extends AppCompatActivity {
+public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonSignIn;
     private Button buttonSignUp;
@@ -17,38 +17,36 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
+        // Initialize UI components, and its functionality
+        initializeUI();
+
+    }
+
+    private void initializeUI() {
         buttonSignIn = findViewById(R.id.button_sign_in);
         buttonSignUp = findViewById(R.id.button_sign_up);
         buttonHelp = findViewById(R.id.button_help);
+        buttonSignIn.setOnClickListener(this);
+        buttonSignUp.setOnClickListener(this);
+        buttonHelp.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        //Button for sign in
+        if (i == R.id.button_sign_in) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
 
+        // Button for sign up
+        else if (i == R.id.button_sign_up) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
 
-        View.OnClickListener accountClickListener = new View.OnClickListener(){
-          @Override
-          public void onClick(View v)
-          {
-              if(v == buttonSignIn)
-              {
-                  startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-              }
-
-              else if(v == buttonSignUp)
-              {
-                  startActivity(new Intent(getApplicationContext(), MainActivity.class));
-              }
-
-              else if(v == buttonHelp)
-              {
-                  // go to help page....
-              }
-          }
-        };
-
-        buttonSignIn.setOnClickListener(accountClickListener);
-        buttonSignUp.setOnClickListener(accountClickListener);
-        buttonHelp.setOnClickListener(accountClickListener);
-
-
-
+        // Button for help
+        else if (i == R.id.button_help) {
+            // go to help page....
+        }
     }
 }
