@@ -1,8 +1,8 @@
 package com.example.richa.buttonclickapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,15 +15,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends AppCompatActivity {
-
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
 
-    private TextView textViewLicensePlate;
-    private TextView textViewModel;
-    private TextView textViewYear;
-    private TextView textViewColor;
+    private TextView textLicensePlate;
+    private TextView textModel;
+    private TextView textYear;
+    private TextView textColor;
 
     private Button buttonLogout;
     private Button buttonUpdate;
@@ -34,23 +33,16 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        initializeUI();
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        if(firebaseAuth.getCurrentUser() == null)
-        {
+        if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
-
-        textViewLicensePlate = (TextView) findViewById(R.id.textViewLicensePlate);
-        textViewModel = (TextView) findViewById(R.id.textViewModel);
-        textViewYear = (TextView) findViewById(R.id.textViewYear);
-        textViewColor = (TextView) findViewById(R.id.textViewColor);
-
-        buttonLogout = (Button) findViewById(R.id.Logout);
-        buttonUpdate = (Button) findViewById(R.id.buttonUpdateProfile);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userId = user.getUid();
@@ -60,20 +52,22 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 System.out.println("---------------" + snapshot.getValue() + "-------------------");
                 String licensePlate = snapshot.getValue().toString();
-                textViewLicensePlate.setText("License Plate: " + licensePlate);
+                textLicensePlate.setText("License Plate: " + licensePlate);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
 
-        databaseReference.child("users").child(userId).child("model").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("users").child(userId).child("brand").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String model = snapshot.getValue().toString();
-                textViewModel.setText("Model: " + model);
+                String brand = snapshot.getValue().toString();
+                textModel.setText("Brand: " + brand);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -84,8 +78,9 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 System.out.println("---------------" + snapshot.getValue() + "-------------------");
                 String year = snapshot.getValue().toString();
-                textViewYear.setText("Year: " + year);
+                textYear.setText("Year: " + year);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -96,35 +91,36 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 System.out.println("---------------" + snapshot.getValue() + "-------------------");
                 String color = snapshot.getValue().toString();
-                textViewColor.setText("Color: " + color);
+                textColor.setText("Color: " + color);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
 
+    private void initializeUI() {
+        textLicensePlate = findViewById(R.id.text_license_plate);
+        textModel = findViewById(R.id.text_brand);
+        textYear = findViewById(R.id.text_year);
+        textColor = findViewById(R.id.text_color);
+        buttonLogout = findViewById(R.id.button_log_out);
+        buttonUpdate = findViewById(R.id.button_update_profile);
+        buttonLogout.setOnClickListener(this);
+        buttonUpdate.setOnClickListener(this);
+    }
 
-
-        View.OnClickListener thisOnClickListener = new View.OnClickListener(){
-          public void onClick(View v)
-          {
-              if(v == buttonLogout)
-              {
-                  firebaseAuth.signOut();
-                  finish();
-                  startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-              }
-
-              if(v == buttonUpdate)
-              {
-                  finish();
-                  startActivity(new Intent(getApplicationContext(), UpdateCarInfoActivity.class));
-              }
-          }
-        };
-
-        buttonLogout.setOnClickListener(thisOnClickListener);
-        buttonUpdate.setOnClickListener(thisOnClickListener);
-
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.button_log_out) {
+            firebaseAuth.signOut();
+            finish();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        } else if (i == R.id.button_update_profile) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), UpdateCarInfoActivity.class));
+        }
     }
 }

@@ -7,13 +7,13 @@
     tools:context=".UpdateCarInfoActivity">
 
     <TextView
-        android:id="@+id/textViewTitle"
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Update Car"
+        android:layout_marginEnd="16dp"
+        android:text="Update Car Information"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextLicensePlate"
+        android:id="@+id/edit_license_plate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="14dp"
@@ -33,32 +33,32 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <TextView
-        android:id="@+id/textViewOr"
+        android:id="@+id/text_or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Or"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLicensePlate" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_license_plate" />
 
     <EditText
-        android:id="@+id/editTextModel"
+        android:id="@+id/edit_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Model"
+        android:hint="Brand"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOr" />
+        app:layout_constraintTop_toBottomOf="@+id/text_or" />
 
     <EditText
-        android:id="@+id/editTextColor"
+        android:id="@+id/edit_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -67,10 +67,10 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextYear" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_Year" />
 
     <EditText
-        android:id="@+id/editTextYear"
+        android:id="@+id/edit_Year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -79,28 +79,28 @@
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextModel" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_brand" />
 
     <Button
-        android:id="@+id/buttonSubmit"
+        android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="16dp"
         android:text="Submit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextColor" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_color" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonSubmit"
-        app:layout_constraintTop_toBottomOf="@+id/editTextColor" />
+        app:layout_constraintStart_toEndOf="@+id/button_submit"
+        app:layout_constraintTop_toBottomOf="@+id/edit_color" />
 
 </android.support.constraint.ConstraintLayout>
