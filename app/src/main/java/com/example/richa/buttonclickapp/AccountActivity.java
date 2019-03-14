@@ -41,7 +41,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
         // Button for sign up
         else if (i == R.id.button_sign_up) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
         }
 
         // Button for help
