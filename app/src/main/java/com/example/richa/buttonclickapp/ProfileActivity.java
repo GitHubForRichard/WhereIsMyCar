@@ -58,9 +58,14 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.child("users").child(userId).child("licensePlate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String licensePlate = snapshot.getValue().toString();
-                textViewLicensePlate.setText("License Plate: " + licensePlate);
+                if(snapshot.getValue() == null){
+                    textViewLicensePlate.setText("License Plate: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String licensePlate = snapshot.getValue().toString();
+                    textViewLicensePlate.setText("License Plate: " + licensePlate);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -70,9 +75,14 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.child("users").child(userId).child("model").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String model = snapshot.getValue().toString();
-                textViewModel.setText("Model: " + model);
+                if(snapshot.getValue() == null){
+                    textViewModel.setText("Model: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String model = snapshot.getValue().toString();
+                    textViewModel.setText("Model: " + model);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -82,9 +92,14 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.child("users").child(userId).child("year").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String year = snapshot.getValue().toString();
-                textViewYear.setText("Year: " + year);
+                if(snapshot.getValue() == null){
+                    textViewYear.setText("Year: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String year = snapshot.getValue().toString();
+                    textViewYear.setText("Year: " + year);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -94,9 +109,14 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.child("users").child(userId).child("color").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String color = snapshot.getValue().toString();
-                textViewColor.setText("Color: " + color);
+                if(snapshot.getValue() == null){
+                    textViewColor.setText("Color: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String color = snapshot.getValue().toString();
+                    textViewColor.setText("Color: " + color);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

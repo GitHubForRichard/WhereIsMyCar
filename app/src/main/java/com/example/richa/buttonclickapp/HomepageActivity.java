@@ -1,16 +1,21 @@
 package com.example.richa.buttonclickapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomepageActivity extends AppCompatActivity {
 
     private ImageButton buttonAccount;
     private ImageButton buttonSearch;
     private ImageButton buttonMap;
+
+    private FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -22,14 +27,26 @@ public class HomepageActivity extends AppCompatActivity {
         buttonSearch = (ImageButton) findViewById(R.id.button_Search);
         buttonMap = (ImageButton) findViewById(R.id.button_Map);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
 
         View.OnClickListener buttomBarListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(v == buttonAccount) {
-                    Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+//                    startActivity(intent);
+
+                    if(firebaseAuth.getCurrentUser() == null) {
+                        Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                        startActivity(intent);
+                    }
                 }
 
                 else if(v == buttonSearch)

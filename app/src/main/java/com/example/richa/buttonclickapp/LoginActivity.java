@@ -167,13 +167,13 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             // save google users' info in firebase database
-
                             UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
                             FirebaseUser currUser = firebaseAuth.getCurrentUser();
                             databaseReference.child(currUser.getUid()).setValue(userInfo);
                             Log.d("TAG", "Successfully added User............................");
 
                             finish();
+                            
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.

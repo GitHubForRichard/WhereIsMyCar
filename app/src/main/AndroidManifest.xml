@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".TestActivity"></activity>
         <activity android:name=".HomepageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +24,12 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".AccountActivity" />
         <activity android:name=".UpdateCarInfoActivity" />
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity" />
+
+        <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="ocr" />
+        <!-- To use multiple models: android:value="ocr,model2,model3" -->
     </application>
 
 </manifest>

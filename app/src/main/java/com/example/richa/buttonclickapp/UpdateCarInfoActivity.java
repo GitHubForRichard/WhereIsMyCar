@@ -69,6 +69,7 @@ public class UpdateCarInfoActivity extends AppCompatActivity {
         FirebaseUser currUser = firebaseAuth.getCurrentUser();
 
         // Update users' car information
+        // Only updates fields that fill out by users
         if(licensePlateStr.length() > 0)
         {
             databaseReference.child("users").child(currUser.getUid()).child("licensePlate").setValue(licensePlateStr);
