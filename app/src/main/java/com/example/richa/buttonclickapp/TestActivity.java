@@ -1,5 +1,6 @@
 package com.example.richa.buttonclickapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -19,15 +21,27 @@ import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TestActivity extends AppCompatActivity {
 
     ImageView imageView;
     TextView textView;
+
+    String licensePlateText;
+
+    FirebaseStorage storage;
+    StorageReference storageReference;
+
+    Uri uri;
 
     Bitmap bitmap;
 
@@ -38,9 +52,12 @@ public class TestActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.imageView);
         textView = (TextView) findViewById(R.id.textView6);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
     }
 
-    public void detect(View v)
+    public void detect()
     {
         if(bitmap == null)
         {
@@ -88,6 +105,7 @@ public class TestActivity extends AppCompatActivity {
             {
                 String text = block.getText();
                 textView.append("\n" + text);
+                licensePlateText = licensePlateText += text;
             }
         }
     }
@@ -104,7 +122,7 @@ public class TestActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1 && resultCode == RESULT_OK)
         {
-            Uri uri = data.getData();
+            uri = data.getData();
             try
             {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
@@ -114,6 +132,45 @@ public class TestActivity extends AppCompatActivity {
             {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void uploadImage(View v) {
+
+        if(uri != null)
+        {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            ref.putFile(uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            detect();
+
+                            LicensePlateInfo licensePlateInfo =
+
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                        }
+                    });
         }
     }
 }
