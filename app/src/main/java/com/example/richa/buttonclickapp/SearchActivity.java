@@ -6,18 +6,24 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
@@ -37,6 +43,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private Button uploadImageButton;
 
     private TextView textView;
+    private EditText searchPlateEditText;
+
     private Bitmap bitmap;
     private DatabaseReference databaseReference;
 
@@ -55,17 +63,18 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.button_search) {
-            detect();
+            searchCar();
         }
 
         else if(i == R.id.button_upload_image){
-            startActivity(new Intent(this, TestActivity.class));
+            startActivity(new Intent(this, UploadLicensePlateActivity.class));
         }
     }
     private void initializeUI() {
         garageSpinner = findViewById(R.id.spinner_garage);
         searchSpinner = findViewById(R.id.spinner_search);
         searchButton = findViewById(R.id.button_search);
+        searchPlateEditText = findViewById(R.id.edit_text_search_plate);
         uploadImageButton = findViewById(R.id.button_upload_image);
         searchButton.setOnClickListener(this);
         uploadImageButton.setOnClickListener(this);
@@ -97,6 +106,33 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         searchSpinner.setAdapter(mySpinnerAdpt2);
 
 
+    }
+
+    // go through the database to find the car image that matches users' input license plate
+    public void searchCar()
+    {
+        // get the license plate users enter
+        final String searchPlate = searchPlateEditText.getText().toString().trim();
+
+        // go through the list and find the cars license plate that contain the searchPlate
+        databaseReference.child("cars")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String eachPlateText;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            LicensePlateInfo licensePlateInfo = snapshot.getValue(LicensePlateInfo.class);
+                            eachPlateText = licensePlateInfo.licensePlateText;
+                            System.out.println(eachPlateText);
+                            if(eachPlateText.contains(searchPlate)){
+                                Log.d("TAG", "The URL for matching Text is: " + licensePlateInfo.photoUrl);
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
     public void detect()

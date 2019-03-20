@@ -8,6 +8,8 @@ public class UserInfo {
     public String color;
     public int year;
 
+    public UserInfo() {}
+
     public UserInfo(String email, String licensePlate, String brand, String color, int year) {
         this.email = email;
         this.licensePlate = licensePlate;

@@ -17,6 +17,8 @@ import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
@@ -27,19 +29,19 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TestActivity extends AppCompatActivity {
+public class UploadLicensePlateActivity extends AppCompatActivity {
 
     ImageView imageView;
     TextView textView;
 
-    String licensePlateText;
+    LicensePlateInfo licensePlateInfo = new LicensePlateInfo("","");
 
     FirebaseStorage storage;
     StorageReference storageReference;
+    DatabaseReference databaseReference;
 
     Uri uri;
 
@@ -48,15 +50,18 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_upload_license_plate);
 
         imageView = (ImageView) findViewById(R.id.imageView);
         textView = (TextView) findViewById(R.id.textView6);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
+    // detect the text on the license plate image
     public void detect()
     {
         if(bitmap == null)
@@ -91,6 +96,7 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
+    // process the text to output the final string that the image could contain
     private void process_text(FirebaseVisionText firebaseVisionText)
     {
         List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
@@ -101,15 +107,26 @@ public class TestActivity extends AppCompatActivity {
         else
         {
             textView.setText("");
+            String licensePlateText = "";
             for(FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks())
             {
                 String text = block.getText();
                 textView.append("\n" + text);
-                licensePlateText = licensePlateText += text;
+                licensePlateText += text;
             }
+
+            licensePlateInfo.setLicensePlateText(licensePlateText);
+
+            Log.d("TAGS", "License Plate Text Detected:" + licensePlateText);
+
+            databaseReference.child("cars").child(UUID.randomUUID().toString()).setValue(licensePlateInfo);
+
+            Log.d("TAG", "Successfully added the uploaded car info............................");
+
         }
     }
 
+    // allow the photo selection from Android camera
     public void pick_Image(View v)
     {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
@@ -135,6 +152,7 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
+    // upload Image to Firebase Storage
     public void uploadImage(View v) {
 
         if(uri != null)
@@ -143,14 +161,25 @@ public class TestActivity extends AppCompatActivity {
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            // place the image to firebase storage
+            final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
             ref.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            // call detect function to get the text within its method
                             detect();
 
-                            LicensePlateInfo licensePlateInfo =
+                            // get the download url from the image that is just uploaded
+                            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String downloadUrl = uri.toString();
+                                    System.out.println("Download Url: " + downloadUrl);
+                                    licensePlateInfo.setPhotoUrl(downloadUrl);
+                                }
+                            });
 
                             progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
