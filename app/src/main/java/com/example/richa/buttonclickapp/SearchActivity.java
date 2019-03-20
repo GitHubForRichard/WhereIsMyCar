@@ -120,6 +120,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String eachPlateText;
+
+                        // go through each child under "cars" parents
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             LicensePlateInfo licensePlateInfo = snapshot.getValue(LicensePlateInfo.class);
                             eachPlateText = licensePlateInfo.licensePlateText;
