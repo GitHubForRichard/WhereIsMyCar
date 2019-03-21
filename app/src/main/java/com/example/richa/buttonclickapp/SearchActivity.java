@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
@@ -121,6 +122,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String eachPlateText;
 
+                        ArrayList<String> licensePlateList  = new ArrayList<>();
+
                         // go through each child under "cars" parents
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             LicensePlateInfo licensePlateInfo = snapshot.getValue(LicensePlateInfo.class);
@@ -128,8 +131,13 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                             System.out.println(eachPlateText);
                             if(eachPlateText.contains(searchPlate)){
                                 Log.d("TAG", "The URL for matching Text is: " + licensePlateInfo.photoUrl);
+                                licensePlateList.add(licensePlateInfo.photoUrl);
                             }
                         }
+                        Intent intent = new Intent(getBaseContext(), SearchResultActivity.class);
+                        intent.putExtra("SEARCH_RESULT", licensePlateList);
+                        startActivity(intent);
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
