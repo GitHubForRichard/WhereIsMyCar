@@ -2,11 +2,11 @@ package com.example.richa.buttonclickapp.Object;
 
 public class UserInfo {
 
-    private String email;
-    private String licensePlate;
-    private String brand;
-    private String color;
-    private int year;
+    public String email;
+    public String licensePlate;
+    public String brand;
+    public String color;
+    public int year;
 
     public UserInfo(String email, String licensePlate, String brand, String color, int year) {
         this.email = email;

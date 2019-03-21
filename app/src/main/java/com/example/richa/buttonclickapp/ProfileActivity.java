@@ -20,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private FirebaseAuth firebaseAuth;
 
     private TextView textLicensePlate;
-    private TextView textModel;
+    private TextView textBrand;
     private TextView textYear;
     private TextView textColor;
 
@@ -50,9 +50,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference.child("users").child(userId).child("licensePlate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String licensePlate = snapshot.getValue().toString();
-                textLicensePlate.setText("License Plate: " + licensePlate);
+
+                if(snapshot.getValue() == null) {
+                    textLicensePlate.setText("License Plate: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String licensePlate = snapshot.getValue().toString();
+                    textLicensePlate.setText("License Plate: " + licensePlate);
+                }
             }
 
             @Override
@@ -63,9 +69,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference.child("users").child(userId).child("brand").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String brand = snapshot.getValue().toString();
-                textModel.setText("Brand: " + brand);
+                if(snapshot.getValue() == null) {
+                    textBrand.setText("Brand: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String brand = snapshot.getValue().toString();
+                    textBrand.setText("Brand: " + brand);
+                }
             }
 
             @Override
@@ -76,9 +87,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference.child("users").child(userId).child("year").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String year = snapshot.getValue().toString();
-                textYear.setText("Year: " + year);
+                if(snapshot.getValue() == null) {
+                    textBrand.setText("Year: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String year = snapshot.getValue().toString();
+                    textYear.setText("Year: " + year);
+                }
             }
 
             @Override
@@ -89,9 +105,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         databaseReference.child("users").child(userId).child("color").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                String color = snapshot.getValue().toString();
-                textColor.setText("Color: " + color);
+                if(snapshot.getValue() == null) {
+                    textColor.setText("Color: to be Updated");
+                }
+                else {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String color = snapshot.getValue().toString();
+                    textColor.setText("Color: " + color);
+                }
             }
 
             @Override
@@ -102,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initializeUI() {
         textLicensePlate = findViewById(R.id.text_license_plate);
-        textModel = findViewById(R.id.text_brand);
+        textBrand = findViewById(R.id.text_brand);
         textYear = findViewById(R.id.text_year);
         textColor = findViewById(R.id.text_color);
         buttonLogout = findViewById(R.id.button_log_out);
