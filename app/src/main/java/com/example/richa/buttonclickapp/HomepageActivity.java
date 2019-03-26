@@ -43,12 +43,10 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
             startActivity(intent);
         }
-        /**
-         * Todo: Implement Google Maps functionality (Assign: Jackbui96)
-         */
         // Button for Google Maps
         else if (i == R.id.imgButton_maps) {
-
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            startActivity(intent);
         }
     }
 }
