@@ -2,23 +2,30 @@ package com.example.richa.buttonclickapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
-
-import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchResultActivity extends AppCompatActivity {
 
-    private ImageView imageViewSearchResult;
+    private LinearLayout linearLayout;
+
+//    private ConstraintLayout constraintLayout;
+
+//    private ImageView imageViewSearchResult1;
+//    private ImageView imageViewSearchResult2;
+//    private ImageView imageViewSearchResult3;
+    private TextView textViewNoResult;
     private Bitmap bitmap;
 
     @Override
@@ -26,22 +33,52 @@ public class SearchResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
-        imageViewSearchResult = findViewById(R.id.search_result_image_view);
+        initializeUI();
 
         ArrayList<String> licensePlateList = getIntent().getStringArrayListExtra("SEARCH_RESULT");
+        ArrayList<ImageView> searchResultImageList = new ArrayList<>();
         ArrayList<Bitmap> bitmapList = new ArrayList<>();
 
-        for(int i = 0; i < licensePlateList.size(); i++)
-        {
-            Log.d("TAG", "Photo Url: " + licensePlateList.get(i));
-            Bitmap eachBitMap = getBitmapFromURL(licensePlateList.get(i));
-            bitmapList.add(eachBitMap);
+        // when there is no matching license plate with given input
+        if(licensePlateList.size() == 0) {
+            textViewNoResult.setText("Sorry.\nThere is no matching license plate");
+        }
+        else {
+            // convert matching license plate photo url to bitmap and add to the list
+            for (int i = 0; i < licensePlateList.size(); i++) {
+                Log.d("TAG", "Photo Url: " + licensePlateList.get(i));
+                Bitmap eachBitMap = getBitmapFromURL(licensePlateList.get(i));
+                bitmapList.add(eachBitMap);
+            }
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000,800);
+            layoutParams.setMargins(200,0,200,0);
+
+            // display license plate images that match with given input
+            for (int j = 0; j < bitmapList.size(); j++) {
+//                searchResultImageList.get(j).setImageBitmap(bitmapList.get(j));
+                ImageView imageView = new ImageView(this);
+                imageView.setImageBitmap(bitmapList.get(j));
+                imageView.setLayoutParams(layoutParams);
+                linearLayout.addView(imageView);
+            }
         }
 
-        for(int j = 0; j < bitmapList.size(); j++)
-        {
-            imageViewSearchResult.setImageBitmap(bitmapList.get(j));
-        }
+    }
+
+    public void initializeUI()
+    {
+
+        linearLayout = findViewById(R.id.linearLayout);
+
+//        constraintLayout = findViewById(R.id.ConstraintLayout);
+
+//        imageViewSearchResult1 = findViewById(R.id.image_view_search_result1);
+//        imageViewSearchResult2 = findViewById(R.id.image_view_search_result2);
+//        imageViewSearchResult3 = findViewById(R.id.image_view_search_result3);
+//
+//        textViewNoResult = findViewById(R.id.text_view_no_result);
+
 
     }
 

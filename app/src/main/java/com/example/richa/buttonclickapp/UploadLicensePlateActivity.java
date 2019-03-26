@@ -52,7 +52,7 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_license_plate);
 
-        imageView = (ImageView) findViewById(R.id.search_result_image_view);
+        imageView = (ImageView) findViewById(R.id.image_view_search_result);
         textView = (TextView) findViewById(R.id.textView6);
 
         storage = FirebaseStorage.getInstance();

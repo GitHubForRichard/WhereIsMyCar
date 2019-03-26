@@ -115,6 +115,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         // get the license plate users enter
         final String searchPlate = searchPlateEditText.getText().toString().trim();
 
+//        if(searchPlate.length() < 5)
+//        {
+//            Toast.makeText(this, "We needs at least five characters to search", Toast.LENGTH_LONG).show();
+//            return;
+//        }
+
         // go through the list and find the cars license plate that contain the searchPlate
         databaseReference.child("cars")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,6 +132,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
                         // go through each child under "cars" parents
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                            if(licensePlateList.size() > 3) {
+                                break;
+                            }
+
                             LicensePlateInfo licensePlateInfo = snapshot.getValue(LicensePlateInfo.class);
                             eachPlateText = licensePlateInfo.licensePlateText;
                             System.out.println(eachPlateText);
