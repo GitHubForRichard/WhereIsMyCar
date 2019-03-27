@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,7 +28,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,8 +51,8 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_license_plate);
 
-        imageView = (ImageView) findViewById(R.id.image_view_search_result);
-        textView = (TextView) findViewById(R.id.textView6);
+        imageView = findViewById(R.id.image_view_search_result);
+        textView = findViewById(R.id.textView6);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -100,19 +99,17 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
     private void process_text(FirebaseVisionText firebaseVisionText)
     {
         List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
-        if(blocks.size() == 0)
-        {
-            Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+
             textView.setText("");
             String licensePlateText = "";
             for(FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks())
             {
-                String text = block.getText();
-                textView.append("\n" + text);
-                licensePlateText += text;
+                for (FirebaseVisionText.Line line : block.getLines()) {
+                    Log.d("Testing line", line.getText());
+                    String text = line.getText();
+                    textView.append(text);
+                    licensePlateText += text;
+                }
             }
 
             licensePlateInfo.setLicensePlateText(licensePlateText);
@@ -124,7 +121,7 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
             Log.d("TAG", "Successfully added the uploaded car info............................");
 
         }
-    }
+
 
     // allow the photo selection from Android camera
     public void pick_Image(View v)
@@ -140,16 +137,41 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
         if(requestCode == 1 && resultCode == RESULT_OK)
         {
             uri = data.getData();
-            try
-            {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                imageView.setImageBitmap(bitmap);
-            }
-            catch(IOException e)
-            {
-                e.printStackTrace();
-            }
+            performCrop();
+            //bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
         }
+        if (requestCode == 2 && resultCode == RESULT_OK) {
+            //get the returned data
+            Bundle extras = data.getExtras();
+//get the cropped bitmap
+            bitmap = extras.getParcelable("data");
+            //uri = data.getData();
+
+
+            //bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), thePic);
+            imageView.setImageBitmap(bitmap);
+
+
+        }
+    }
+
+    private void performCrop() {
+        //call the standard crop action intent (the user device may not support it)
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        //indicate image type and Uri
+        cropIntent.setDataAndType(uri, "image/*");
+        //set crop properties
+        cropIntent.putExtra("crop", "true");
+        //indicate aspect of desired crop
+        //cropIntent.putExtra("aspectX", 1);
+        //cropIntent.putExtra("aspectY", 1);
+        //indicate output X and Y
+        cropIntent.putExtra("outputX", 256);
+        cropIntent.putExtra("outputY", 256);
+        ////retrieve data on return
+        cropIntent.putExtra("return-data", true);
+        //start the activity - we handle returning in onActivityResult
+        startActivityForResult(cropIntent, 2);
     }
 
     // upload Image to Firebase Storage
