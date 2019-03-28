@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,31 +29,37 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.List;
 import java.util.UUID;
 
 public class UploadLicensePlateActivity extends AppCompatActivity {
 
-    ImageView imageView;
-    TextView textView;
+    private static final int PICK_IMAGE = 1;
+    private static final int IMAGE_RECOGNITION = 2;
 
-    LicensePlateInfo licensePlateInfo = new LicensePlateInfo("","");
+    private ImageView ivResult;
+    private TextView tvResult;
+    private EditText etFloor;
+    private EditText etLocation;
+    private int floor;
+    private String location;
 
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    DatabaseReference databaseReference;
+    private LicensePlateInfo licensePlateInfo
+            = new LicensePlateInfo("", "", 0, "");
 
-    Uri uri;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
 
-    Bitmap bitmap;
+    private Uri uri;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_license_plate);
 
-        imageView = findViewById(R.id.image_view_search_result);
-        textView = findViewById(R.id.textView6);
+        // Initialize UI components, and its functionality.
+        initializeUI();
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -60,17 +67,13 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
-    // detect the text on the license plate image
-    public void detect()
-    {
-        if(bitmap == null)
-        {
+    // Detect text on license plate image.
+    public void detect() {
+        if (bitmap == null) {
             Toast.makeText(getApplicationContext(), "Bitmap is null", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
+        } else {
 
+            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
             FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
                     .getOnDeviceTextRecognizer();
             Task<FirebaseVisionText> result =
@@ -79,7 +82,6 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(FirebaseVisionText firebaseVisionText) {
                                     // Task completed successfully
-                                    // ...
                                     process_text(firebaseVisionText);
                                 }
                             })
@@ -88,112 +90,99 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
                                         @Override
                                         public void onFailure(Exception e) {
                                             // Task failed with an exception
-                                            // ...
                                             e.printStackTrace();
                                         }
                                     });
         }
     }
 
-    // process the text to output the final string that the image could contain
-    private void process_text(FirebaseVisionText firebaseVisionText)
-    {
-        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
+    // Process text to output the final string that the image could contain.
+    private void process_text(FirebaseVisionText firebaseVisionText) {
+        floor = Integer.parseInt(etFloor.getText().toString());
+        location = etLocation.getText().toString().trim();
+        tvResult.setText("");
+        String licensePlateText = "";
 
-            textView.setText("");
-            String licensePlateText = "";
-            for(FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks())
-            {
-                for (FirebaseVisionText.Line line : block.getLines()) {
-                    Log.d("Testing line", line.getText());
-                    String text = line.getText();
-                    textView.append(text);
-                    licensePlateText += text;
-                }
+        for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
+            for (FirebaseVisionText.Line line : block.getLines()) {
+                Log.d("Testing line", line.getText());
+                String text = line.getText();
+                tvResult.append(text);
+                licensePlateText += text;
             }
-
-            licensePlateInfo.setLicensePlateText(licensePlateText);
-
-            Log.d("TAGS", "License Plate Text Detected:" + licensePlateText);
-
-            databaseReference.child("cars").child(UUID.randomUUID().toString()).setValue(licensePlateInfo);
-
-            Log.d("TAG", "Successfully added the uploaded car info............................");
-
         }
 
+        licensePlateInfo.setLicensePlateText(licensePlateText);
+        licensePlateInfo.setFloor(floor);
+        licensePlateInfo.setLocation(location);
 
-    // allow the photo selection from Android camera
-    public void pick_Image(View v)
-    {
+        Log.d("TAGS", "License Plate Text Detected:" + licensePlateText);
+        databaseReference.child("cars").child(UUID.randomUUID().toString()).setValue(licensePlateInfo);
+        Log.d("TAG", "Successfully added the uploaded car info............................");
+    }
+
+    // Allow the photo selection from Android camera.
+    public void pick_Image(View v) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(i,1);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == RESULT_OK)
-        {
-            uri = data.getData();
-            performCrop();
-            //bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-        }
-        if (requestCode == 2 && resultCode == RESULT_OK) {
-            //get the returned data
-            Bundle extras = data.getExtras();
-//get the cropped bitmap
-            bitmap = extras.getParcelable("data");
-            //uri = data.getData();
-
-
-            //bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), thePic);
-            imageView.setImageBitmap(bitmap);
-
-
-        }
-    }
-
+    // Perform cropping the letters and numbers from license plate. (Manual)
     private void performCrop() {
-        //call the standard crop action intent (the user device may not support it)
+        // Call the standard crop action intent (some user device may not support)
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
-        //indicate image type and Uri
+        // Indicate image type and Uri
         cropIntent.setDataAndType(uri, "image/*");
-        //set crop properties
+        // Set crop properties
         cropIntent.putExtra("crop", "true");
-        //indicate aspect of desired crop
-        //cropIntent.putExtra("aspectX", 1);
-        //cropIntent.putExtra("aspectY", 1);
-        //indicate output X and Y
+        // Indicate output X and Y
         cropIntent.putExtra("outputX", 256);
         cropIntent.putExtra("outputY", 256);
-        ////retrieve data on return
+        // Retrieve data on return
         cropIntent.putExtra("return-data", true);
-        //start the activity - we handle returning in onActivityResult
+        // Start the activity - we handle returning in onActivityResult
         startActivityForResult(cropIntent, 2);
     }
 
-    // upload Image to Firebase Storage
-    public void uploadImage(View v) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(uri != null)
-        {
+        // Done with picking image -> perform cropping.
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            uri = data.getData();
+            performCrop();
+        }
+
+        // After cropping, get returned data to image recognition.
+        if (requestCode == IMAGE_RECOGNITION && resultCode == RESULT_OK) {
+            // Get returned data
+            Bundle extras = data.getExtras();
+            // Get  cropped bitmap
+            bitmap = extras.getParcelable("data");
+            ivResult.setImageBitmap(bitmap);
+        }
+    }
+
+    // Upload Image to Firebase Storage
+    public void uploadImage(View v) {
+        if (uri != null) {
+
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            // place the image to firebase storage
+            // Place the image to firebase storage
             final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
             ref.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            // call detect function to get the text within its method
+                            // Call detect function to get the text within its method
                             detect();
 
-                            // get the download url from the image that is just uploaded
+                            // Get the download url from the image that is just uploaded
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -223,5 +212,12 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void initializeUI() {
+        ivResult = findViewById(R.id.image_view_search_result);
+        tvResult = findViewById(R.id.text_result);
+        etFloor = findViewById(R.id.edit_floor);
+        etLocation = findViewById(R.id.edit_location);
     }
 }

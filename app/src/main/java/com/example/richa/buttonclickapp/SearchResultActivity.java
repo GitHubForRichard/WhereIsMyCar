@@ -1,14 +1,16 @@
 package com.example.richa.buttonclickapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,12 +21,9 @@ import java.util.ArrayList;
 public class SearchResultActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout;
+    private TextView textFloor;
+    private TextView textLocation;
 
-//    private ConstraintLayout constraintLayout;
-
-//    private ImageView imageViewSearchResult1;
-//    private ImageView imageViewSearchResult2;
-//    private ImageView imageViewSearchResult3;
     private TextView textViewNoResult;
     private Bitmap bitmap;
 
@@ -35,7 +34,9 @@ public class SearchResultActivity extends AppCompatActivity {
 
         initializeUI();
 
-        ArrayList<String> licensePlateList = getIntent().getStringArrayListExtra("SEARCH_RESULT");
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("BUNDLE");
+        ArrayList<LicensePlateInfo> licensePlateList = (ArrayList<LicensePlateInfo>) args.getSerializable("ARRAYLIST");
         ArrayList<ImageView> searchResultImageList = new ArrayList<>();
         ArrayList<Bitmap> bitmapList = new ArrayList<>();
 
@@ -46,9 +47,14 @@ public class SearchResultActivity extends AppCompatActivity {
         else {
             // convert matching license plate photo url to bitmap and add to the list
             for (int i = 0; i < licensePlateList.size(); i++) {
-                Log.d("TAG", "Photo Url: " + licensePlateList.get(i));
-                Bitmap eachBitMap = getBitmapFromURL(licensePlateList.get(i));
+                Log.d("TAG", "Photo Url: " + licensePlateList.get(i).getPhotoUrl());
+                Bitmap eachBitMap = getBitmapFromURL(licensePlateList.get(i).getPhotoUrl());
                 bitmapList.add(eachBitMap);
+                textFloor.setText(
+                        "Your car is located at the " +
+                                String.valueOf(licensePlateList.get(i).getFloor()) + " floor");
+                textLocation.setText("In spot " +
+                        licensePlateList.get(i).getLocation());
             }
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000,800);
@@ -56,7 +62,6 @@ public class SearchResultActivity extends AppCompatActivity {
 
             // display license plate images that match with given input
             for (int j = 0; j < bitmapList.size(); j++) {
-//                searchResultImageList.get(j).setImageBitmap(bitmapList.get(j));
                 ImageView imageView = new ImageView(this);
                 imageView.setImageBitmap(bitmapList.get(j));
                 imageView.setLayoutParams(layoutParams);
@@ -70,6 +75,8 @@ public class SearchResultActivity extends AppCompatActivity {
     {
 
         linearLayout = findViewById(R.id.linearLayout);
+        textFloor = findViewById(R.id.text_floor);
+        textLocation = findViewById(R.id.text_location);
 
 //        constraintLayout = findViewById(R.id.ConstraintLayout);
 
