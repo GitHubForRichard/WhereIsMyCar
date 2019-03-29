@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,8 +25,8 @@ public class SearchResultActivity extends AppCompatActivity {
     private TextView textFloor;
     private TextView textLocation;
 
-    private TextView textViewNoResult;
-    private Bitmap bitmap;
+    private ArrayList<LicensePlateInfo> licensePlateList;
+    private ArrayList<Bitmap> bitmapList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +37,15 @@ public class SearchResultActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");
-        ArrayList<LicensePlateInfo> licensePlateList = (ArrayList<LicensePlateInfo>) args.getSerializable("ARRAYLIST");
-        ArrayList<ImageView> searchResultImageList = new ArrayList<>();
-        ArrayList<Bitmap> bitmapList = new ArrayList<>();
+        licensePlateList = (ArrayList<LicensePlateInfo>) args.getSerializable("ARRAYLIST");
+        bitmapList = new ArrayList<>();
 
-        // when there is no matching license plate with given input
+        // When there is no matching license plate with given input
         if(licensePlateList.size() == 0) {
-            textViewNoResult.setText("Sorry.\nThere is no matching license plate");
+            textFloor.setText("Sorry.\nThere is no matching license plate");
         }
         else {
-            // convert matching license plate photo url to bitmap and add to the list
+            // Convert matching license plate photo url to bitmap and add to the list
             for (int i = 0; i < licensePlateList.size(); i++) {
                 Log.d("TAG", "Photo Url: " + licensePlateList.get(i).getPhotoUrl());
                 Bitmap eachBitMap = getBitmapFromURL(licensePlateList.get(i).getPhotoUrl());
@@ -57,10 +57,11 @@ public class SearchResultActivity extends AppCompatActivity {
                         licensePlateList.get(i).getLocation());
             }
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000,800);
-            layoutParams.setMargins(200,0,200,0);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(600, 300);
+            layoutParams.gravity = Gravity.CENTER;
+            layoutParams.setMargins(16, 8, 16, 0);
 
-            // display license plate images that match with given input
+            // Display license plate images that match with given input
             for (int j = 0; j < bitmapList.size(); j++) {
                 ImageView imageView = new ImageView(this);
                 imageView.setImageBitmap(bitmapList.get(j));
@@ -68,25 +69,12 @@ public class SearchResultActivity extends AppCompatActivity {
                 linearLayout.addView(imageView);
             }
         }
-
     }
 
-    public void initializeUI()
-    {
-
+    public void initializeUI() {
         linearLayout = findViewById(R.id.linearLayout);
         textFloor = findViewById(R.id.text_floor);
         textLocation = findViewById(R.id.text_location);
-
-//        constraintLayout = findViewById(R.id.ConstraintLayout);
-
-//        imageViewSearchResult1 = findViewById(R.id.image_view_search_result1);
-//        imageViewSearchResult2 = findViewById(R.id.image_view_search_result2);
-//        imageViewSearchResult3 = findViewById(R.id.image_view_search_result3);
-//
-//        textViewNoResult = findViewById(R.id.text_view_no_result);
-
-
     }
 
     public static Bitmap getBitmapFromURL(String src) {
