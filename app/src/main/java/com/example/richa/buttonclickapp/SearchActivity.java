@@ -19,6 +19,7 @@ import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,6 +49,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private Bitmap bitmap;
     private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_search);
 
         initializeUI();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -68,7 +73,14 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         else if(i == R.id.button_upload_image){
-            startActivity(new Intent(this, UploadLicensePlateActivity.class));
+            if (firebaseAuth.getCurrentUser() == null) {
+                finish();
+                startActivity(new Intent(this, AccountActivity.class));
+                Toast.makeText(this, "Please log in first before uploading images", Toast.LENGTH_LONG).show();
+        }
+            else {
+                startActivity(new Intent(this, UploadLicensePlateActivity.class));
+            }
         }
     }
     private void initializeUI() {
