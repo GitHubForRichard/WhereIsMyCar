@@ -2,10 +2,13 @@ package com.example.richa.buttonclickapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,11 +42,20 @@ public class SearchResultActivity extends AppCompatActivity {
         ArrayList<ImageView> searchResultImageList = new ArrayList<>();
         ArrayList<Bitmap> bitmapList = new ArrayList<>();
 
+        // Create a search result title for the page and style
+        TextView searchResultTextView = new TextView(this);
+        searchResultTextView.setTextSize(24);
+        searchResultTextView.setTypeface(null, Typeface.BOLD);
+        searchResultTextView.setGravity(Gravity.CENTER_HORIZONTAL);
+        linearLayout.addView(searchResultTextView);
+
         // when there is no matching license plate with given input
         if(licensePlateList.size() == 0) {
-            textViewNoResult.setText("Sorry.\nThere is no matching license plate");
+            searchResultTextView.setText("Sorry.\nThere is no matching license plate");
+
         }
         else {
+            searchResultTextView.setText("Search Result: ");
             // convert matching license plate photo url to bitmap and add to the list
             for (int i = 0; i < licensePlateList.size(); i++) {
                 Log.d("TAG", "Photo Url: " + licensePlateList.get(i));
@@ -53,6 +65,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000,800);
             layoutParams.setMargins(200,0,200,0);
+
 
             // display license plate images that match with given input
             for (int j = 0; j < bitmapList.size(); j++) {
@@ -70,6 +83,7 @@ public class SearchResultActivity extends AppCompatActivity {
     {
 
         linearLayout = findViewById(R.id.linearLayout);
+
 
 //        constraintLayout = findViewById(R.id.ConstraintLayout);
 

@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnSubmit;
+    private Button btnCancel;
+
     private EditText etEmail;
     private EditText etPassword;
 
@@ -45,10 +47,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void initializeUI() {
         progressDialog = new ProgressDialog(this);
         btnSubmit = findViewById(R.id.button_submit);
+        btnCancel = findViewById(R.id.button_cancel);
         etEmail = findViewById(R.id.edit_email);
         etPassword = findViewById(R.id.edit_password);
 
         btnSubmit.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
     }
 
     private void initializeFirebase() {
@@ -127,6 +131,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Button for register user
         if (i == R.id.button_submit) {
             registerUser();
+        }
+        else if(i == R.id.button_cancel){
+            finish();
+            startActivity(new Intent(this, HomepageActivity.class));
         }
     }
 }

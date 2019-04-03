@@ -3,6 +3,7 @@ package com.example.richa.buttonclickapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -143,6 +144,9 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
             try
             {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+
+//                bitmap = Bitmap.createBitmap(bitmap, 0,400,bitmap.getWidth(), 400);
+
                 imageView.setImageBitmap(bitmap);
             }
             catch(IOException e)
