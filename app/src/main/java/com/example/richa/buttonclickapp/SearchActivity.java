@@ -59,9 +59,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        initializeUI();
-
         firebaseAuth = FirebaseAuth.getInstance();
+
+        initializeUI();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -115,6 +115,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         searchSpinner = findViewById(R.id.spinner_search);
         searchButton = findViewById(R.id.button_search);
         findMyCarButton = findViewById(R.id.button_find_my_car);
+
+        if(firebaseAuth.getUid() == null){
+            findMyCarButton.setVisibility(View.GONE);
+        }
+
         searchPlateEditText = findViewById(R.id.edit_text_search_plate);
         uploadImageButton = findViewById(R.id.button_upload_image);
 
