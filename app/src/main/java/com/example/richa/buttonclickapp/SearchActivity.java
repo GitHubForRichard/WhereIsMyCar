@@ -1,5 +1,6 @@
 package com.example.richa.buttonclickapp;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,8 +42,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private Spinner garageSpinner;
     private Spinner searchSpinner;
+    private ProgressDialog progressDialog;
     private Button searchButton;
     private Button uploadImageButton;
+    private Button findMyCarButton;
 
     private TextView textView;
     private EditText searchPlateEditText;
@@ -82,17 +85,44 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this, UploadLicensePlateActivity.class));
             }
         }
+
+        else if(i == R.id.button_find_my_car)
+        {
+
+            if(firebaseAuth.getUid() == null){
+                startActivity(new Intent(this, AccountActivity.class));
+                Toast.makeText(this, "Please log in first", Toast.LENGTH_LONG).show();
+                return;
+            }
+            else {
+                String userId = firebaseAuth.getUid();
+                databaseReference.child("users").child(userId).child("licensePlate").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                        String licensePlate = snapshot.getValue().toString();
+                        searchPlateEditText.setText(licensePlate);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
+        }
     }
     private void initializeUI() {
         garageSpinner = findViewById(R.id.spinner_garage);
         searchSpinner = findViewById(R.id.spinner_search);
         searchButton = findViewById(R.id.button_search);
+        findMyCarButton = findViewById(R.id.button_find_my_car);
         searchPlateEditText = findViewById(R.id.edit_text_search_plate);
         uploadImageButton = findViewById(R.id.button_upload_image);
+
+        progressDialog = new ProgressDialog(this);
         searchButton.setOnClickListener(this);
+        findMyCarButton.setOnClickListener(this);
         uploadImageButton.setOnClickListener(this);
 
-        textView = findViewById(R.id.textView);
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         //Initializing string array for garage spinner
@@ -127,11 +157,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         // get the license plate users enter
         final String searchPlate = searchPlateEditText.getText().toString().trim();
 
-//        if(searchPlate.length() < 5)
-//        {
-//            Toast.makeText(this, "We needs at least five characters to search", Toast.LENGTH_LONG).show();
-//            return;
-//        }
+        if(searchPlate.length() < 5)
+        {
+            Toast.makeText(this, "We needs at least five characters to search", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // go through the list and find the cars license plate that contain the searchPlate
         databaseReference.child("cars")
@@ -168,8 +198,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 });
     }
 
-    public void detect()
-    {
+//    public void detect()
+//    {
 
 //        databaseReference.child("cars").child("photoUrl").addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -188,57 +218,57 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 //            }
 //        });
 
-        bitmap = getBitmapFromURL("https://sdashirts.com/wp-content/uploads/2016/09/SDA-License-Frame-for-car-plates-Adventists-Seventh-is-still-Gods-Sabbath.jpg");
-        if(bitmap == null)
-        {
-            Toast.makeText(getApplicationContext(), "Bitmap is null", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
+//        bitmap = getBitmapFromURL("https://sdashirts.com/wp-content/uploads/2016/09/SDA-License-Frame-for-car-plates-Adventists-Seventh-is-still-Gods-Sabbath.jpg");
+//        if(bitmap == null)
+//        {
+//            Toast.makeText(getApplicationContext(), "Bitmap is null", Toast.LENGTH_LONG).show();
+//        }
+//        else
+//        {
+//            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
+//
+//            FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
+//                    .getOnDeviceTextRecognizer();
+//            Task<FirebaseVisionText> result =
+//                    detector.processImage(firebaseVisionImage)
+//                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+//                                @Override
+//                                public void onSuccess(FirebaseVisionText firebaseVisionText) {
+//                                    // Task completed successfully
+//                                    // ...
+//                                    process_text(firebaseVisionText);
+//                                }
+//                            })
+//                            .addOnFailureListener(
+//                                    new OnFailureListener() {
+//                                        @Override
+//                                        public void onFailure(Exception e) {
+//                                            // Task failed with an exception
+//                                            // ...
+//                                            e.printStackTrace();
+//                                        }
+//                                    });
+//        }
+//    }
 
-            FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
-                    .getOnDeviceTextRecognizer();
-            Task<FirebaseVisionText> result =
-                    detector.processImage(firebaseVisionImage)
-                            .addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
-                                @Override
-                                public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                                    // Task completed successfully
-                                    // ...
-                                    process_text(firebaseVisionText);
-                                }
-                            })
-                            .addOnFailureListener(
-                                    new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(Exception e) {
-                                            // Task failed with an exception
-                                            // ...
-                                            e.printStackTrace();
-                                        }
-                                    });
-        }
-    }
-
-    private void process_text(FirebaseVisionText firebaseVisionText)
-    {
-        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
-        if(blocks.size() == 0)
-        {
-            Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-//            textView.setText("");
-            for(FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks())
-            {
-                String text = block.getText();
-                System.out.println("--------" + text + "---------");
-                textView.append("\n" + text);
-            }
-        }
-    }
+//    private void process_text(FirebaseVisionText firebaseVisionText)
+//    {
+//        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
+//        if(blocks.size() == 0)
+//        {
+//            Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_LONG).show();
+//        }
+//        else
+//        {
+////            textView.setText("");
+//            for(FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks())
+//            {
+//                String text = block.getText();
+//                System.out.println("--------" + text + "---------");
+//                textView.append("\n" + text);
+//            }
+//        }
+//    }
 
     public static Bitmap getBitmapFromURL(String src) {
         try {

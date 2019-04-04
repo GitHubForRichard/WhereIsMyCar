@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -22,6 +25,11 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
     private EditText etColor;
     private Button btnSubmit;
 
+    private String licensePlateInitStr;
+    private String brandInitStr;
+    private String colorInitStr;
+    private int yearInitStr;
+
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
 
@@ -30,10 +38,17 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_car_info);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        String userId = firebaseAuth.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
         initializeUI();
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        setInitLicensePlate(userId);
+        setInitBrand(userId);
+        setInitYear(userId);
+        setInitColor(userId);
     }
 
 
@@ -86,6 +101,10 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
         etBrand = findViewById(R.id.edit_brand);
         etYear = findViewById(R.id.edit_Year);
         etColor = findViewById(R.id.edit_color);
+
+        etLicensePlate.setText(licensePlateInitStr);
+
+
         btnSubmit = findViewById(R.id.button_submit);
         btnSubmit.setOnClickListener(this);
     }
@@ -99,5 +118,73 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
             finish();
             startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
         }
+    }
+
+    public void setInitLicensePlate(String userId)
+    {
+        databaseReference.child("users").child(userId).child("licensePlate").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.getValue() != null) {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String licensePlate = snapshot.getValue().toString();
+                    etLicensePlate.setText(licensePlate);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public void setInitBrand(String userId)
+    {
+        databaseReference.child("users").child(userId).child("brand").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.getValue() != null) {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String brand = snapshot.getValue().toString();
+                    etBrand.setText(brand);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public void setInitColor(String userId)
+    {
+        databaseReference.child("users").child(userId).child("color").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.getValue() != null) {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String color = snapshot.getValue().toString();
+                    etColor.setText(color);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public void setInitYear(String userId)
+    {
+        databaseReference.child("users").child(userId).child("year").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if(snapshot.getValue() != null) {
+                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+                    String year = snapshot.getValue().toString();
+                    etYear.setText(year);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }
