@@ -163,15 +163,22 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            // check if the logged in user is a new user
+                            boolean isNewUser = task.getResult().getAdditionalUserInfo().isNewUser();
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             // save google users' info in firebase database
-                            UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
-                            FirebaseUser currUser = firebaseAuth.getCurrentUser();
-                            databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
-                            Log.d("TAG", "Successfully added User............................");
+                            // if the user is first time logging in
+                            if(isNewUser) {
+                                UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
+                                FirebaseUser currUser = firebaseAuth.getCurrentUser();
+                                databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
+                                Log.d("TAG", "This is a new user from Google, Successfully added User............................");
+                            }
 
                             finish();
                             
