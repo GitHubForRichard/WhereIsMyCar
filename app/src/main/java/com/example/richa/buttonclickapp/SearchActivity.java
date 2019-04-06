@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
+import com.example.richa.buttonclickapp.Object.SearchHistory;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,6 +38,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,6 +48,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     private Button searchButton;
     private Button uploadImageButton;
     private Button findMyCarButton;
+    private Button searchHistoryButton;
 
     private TextView textView;
     private EditText searchPlateEditText;
@@ -75,6 +78,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             searchCar();
         }
 
+        // if the user click search history button
+        else if(i == R.id.button_search_history){
+            startActivity(new Intent(this, searchHistoryActivity.class));
+        }
+
+        // if the user clicks upload image button
         else if(i == R.id.button_upload_image){
             if (firebaseAuth.getCurrentUser() == null) {
                 finish();
@@ -86,6 +95,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
+        // if the user clicks find my car button
         else if(i == R.id.button_find_my_car)
         {
 
@@ -115,17 +125,31 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         searchSpinner = findViewById(R.id.spinner_search);
         searchButton = findViewById(R.id.button_search);
         findMyCarButton = findViewById(R.id.button_find_my_car);
+        searchHistoryButton = findViewById(R.id.button_search_history);
 
+        // Buttons that only registered users can see
         if(firebaseAuth.getUid() == null){
             findMyCarButton.setVisibility(View.GONE);
+            searchHistoryButton.setVisibility(View.GONE);
         }
 
         searchPlateEditText = findViewById(R.id.edit_text_search_plate);
+
+        String searchHistory = searchHistoryActivity.searchLicensePlate;
+
+        // if the search page appears after the user clicks the search history
+        // fill with the license plate that he is trying to search
+        if(!searchHistory.equals(""))
+        {
+            searchPlateEditText.setText(searchHistory);
+        }
+
         uploadImageButton = findViewById(R.id.button_upload_image);
 
         progressDialog = new ProgressDialog(this);
         searchButton.setOnClickListener(this);
         findMyCarButton.setOnClickListener(this);
+        searchHistoryButton.setOnClickListener(this);
         uploadImageButton.setOnClickListener(this);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -161,6 +185,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     {
         // get the license plate users enter
         final String searchPlate = searchPlateEditText.getText().toString().trim();
+
+        if(firebaseAuth.getUid() != null){
+            String userId = firebaseAuth.getUid();
+            SearchHistory searchHistory = new SearchHistory(userId, searchPlate);
+            databaseReference.child("searches").child(UUID.randomUUID().toString()).setValue(searchHistory);
+        }
 
         if(searchPlate.length() < 5)
         {
