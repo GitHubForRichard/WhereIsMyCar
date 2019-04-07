@@ -131,6 +131,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         if(firebaseAuth.getUid() == null){
             findMyCarButton.setVisibility(View.GONE);
             searchHistoryButton.setVisibility(View.GONE);
+            uploadImageButton.setVisibility(View.GONE);
         }
 
         searchPlateEditText = findViewById(R.id.edit_text_search_plate);

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +27,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button buttonLogout;
     private Button buttonUpdate;
+    private Button buttonUpdateUserAccount;
+
     private DatabaseReference databaseReference;
 
     @Override
@@ -33,11 +36,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        initializeUI();
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        initializeUI();
 
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
@@ -126,10 +129,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         textBrand = findViewById(R.id.text_brand);
         textYear = findViewById(R.id.text_year);
         textColor = findViewById(R.id.text_color);
+
         buttonLogout = findViewById(R.id.button_log_out);
         buttonUpdate = findViewById(R.id.button_update_profile);
+        buttonUpdateUserAccount = findViewById(R.id.button_update_user_account);
+
+        // user logging in with gmail account should not change gmail account info
+        // with this application
+        for(UserInfo user: firebaseAuth.getCurrentUser().getProviderData())
+        {
+            if(user.getProviderId().equals("google.com")){
+                buttonUpdateUserAccount.setVisibility(View.GONE);
+            }
+        }
+
         buttonLogout.setOnClickListener(this);
         buttonUpdate.setOnClickListener(this);
+        buttonUpdateUserAccount.setOnClickListener(this);
     }
 
     @Override
@@ -139,9 +155,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             firebaseAuth.signOut();
             finish();
             startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
-        } else if (i == R.id.button_update_profile) {
+        }
+        else if (i == R.id.button_update_profile) {
             finish();
             startActivity(new Intent(getApplicationContext(), UpdateCarInfoActivity.class));
+        }
+        else if(i == R.id.button_update_user_account){
+            finish();
+            startActivity(new Intent(getApplicationContext(), UserAccountActivity.class));
+
         }
     }
 }
