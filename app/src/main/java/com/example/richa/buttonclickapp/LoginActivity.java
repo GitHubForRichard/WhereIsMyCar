@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                             // save google users' info in firebase database
                             UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
                             FirebaseUser currUser = firebaseAuth.getCurrentUser();
-                            databaseReference.child(currUser.getUid()).setValue(userInfo);
+                            databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
                             Log.d("TAG", "Successfully added User............................");
 
                             finish();
