@@ -1,6 +1,8 @@
 package com.example.richa.buttonclickapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -228,7 +230,24 @@ public class LoginActivity extends AppCompatActivity {
                                 else
                                 {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    // Username or password false, display and an error
+                                    // add a pop up dialog to show users entering wrong email and password
+                                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(LoginActivity.this);
+
+                                    dlgAlert.setMessage("Invalid email or password");
+                                    dlgAlert.setTitle("Login Failed");
+                                    dlgAlert.setPositiveButton("Try Again", null);
+                                    dlgAlert.setCancelable(true);
+                                    dlgAlert.create().show();
+
+                                    dlgAlert.setPositiveButton("Try Again",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            });
+
+//                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
