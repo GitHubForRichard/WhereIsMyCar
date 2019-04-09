@@ -69,66 +69,66 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        databaseReference.child("users").child(userId).child("brand").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.getValue() == null) {
-                    textBrand.setText("Brand: to be Updated");
-                }
-                else {
-                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                    String brand = snapshot.getValue().toString();
-                    textBrand.setText("Brand: " + brand);
-                }
-            }
+//        databaseReference.child("users").child(userId).child("brand").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                if(snapshot.getValue() == null) {
+//                    textBrand.setText("Brand: to be Updated");
+//                }
+//                else {
+//                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+//                    String brand = snapshot.getValue().toString();
+//                    textBrand.setText("Brand: " + brand);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+//        databaseReference.child("users").child(userId).child("year").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                if(snapshot.getValue() == null) {
+//                    textBrand.setText("Year: to be Updated");
+//                }
+//                else {
+//                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+//                    String year = snapshot.getValue().toString();
+//                    textYear.setText("Year: " + year);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
 
-        databaseReference.child("users").child(userId).child("year").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.getValue() == null) {
-                    textBrand.setText("Year: to be Updated");
-                }
-                else {
-                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                    String year = snapshot.getValue().toString();
-                    textYear.setText("Year: " + year);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        databaseReference.child("users").child(userId).child("color").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.getValue() == null) {
-                    textColor.setText("Color: to be Updated");
-                }
-                else {
-                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                    String color = snapshot.getValue().toString();
-                    textColor.setText("Color: " + color);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+//        databaseReference.child("users").child(userId).child("color").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot snapshot) {
+//                if(snapshot.getValue() == null) {
+//                    textColor.setText("Color: to be Updated");
+//                }
+//                else {
+//                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
+//                    String color = snapshot.getValue().toString();
+//                    textColor.setText("Color: " + color);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
     }
 
     private void initializeUI() {
         textLicensePlate = findViewById(R.id.text_license_plate);
-        textBrand = findViewById(R.id.text_brand);
-        textYear = findViewById(R.id.text_year);
-        textColor = findViewById(R.id.text_color);
+//        textBrand = findViewById(R.id.text_brand);
+//        textYear = findViewById(R.id.text_year);
+//        textColor = findViewById(R.id.text_color);
 
         buttonLogout = findViewById(R.id.button_log_out);
         buttonUpdate = findViewById(R.id.button_update_profile);
