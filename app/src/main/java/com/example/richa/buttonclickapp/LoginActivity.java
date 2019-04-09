@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,29 +31,25 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonLogin;
     private Button btnCancel;
     private SignInButton buttonGoogleLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
-
     private GoogleSignInClient mGoogleSignInClient;
-
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-
     private static int RC_SIGN_IN = 1;
     private static final String TAG = "LOGIN_ACTIVITY";
-
     private TextView textViewSignup;
-
     private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
-
     private DatabaseReference databaseReference;
+    //////////////////////////////////////////////////////////////
+    private ImageButton buttonAccount;
+    private ImageButton buttonSearch;
+    private ImageButton buttonMaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        if(firebaseAuth.getCurrentUser() != null)
-        {
+        if(firebaseAuth.getCurrentUser() != null) {
             // if the user has already logged in'
             finish();
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -91,8 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         View.OnClickListener myOnClickListener = new View.OnClickListener(){
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 if(v == buttonLogin) {
                     userLogin();
                 }
@@ -103,13 +98,11 @@ public class LoginActivity extends AppCompatActivity {
 //                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //                }
 
-                if(v == buttonGoogleLogin)
-                {
+                if(v == buttonGoogleLogin) {
                     googleLogin();
                 }
 
-                if(v == btnCancel)
-                {
+                if(v == btnCancel) {
                     finish();
                     startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
                 }
@@ -121,9 +114,45 @@ public class LoginActivity extends AppCompatActivity {
         buttonGoogleLogin.setOnClickListener(myOnClickListener);
         btnCancel.setOnClickListener(myOnClickListener);
 
-
+        initializeUI();
     }
 
+    //////////////////////////////////////////////////////////////////////////////
+    private void initializeUI() {
+        buttonAccount = findViewById(R.id.imgButton_account);
+        buttonAccount.setImageResource(R.drawable.account_icon);
+
+        buttonSearch = findViewById(R.id.imgButton_search);
+        buttonSearch.setImageResource(R.drawable.search_icon);
+
+        buttonMaps = findViewById(R.id.imgButton_maps);
+        buttonMaps.setImageResource(R.drawable.google_icon);
+        buttonAccount.setOnClickListener(this);
+        buttonSearch.setOnClickListener(this);
+        buttonMaps.setOnClickListener(this);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    public void onClick(View v) {
+        int i = v.getId();
+        // Button for account page
+        if (i == R.id.imgButton_account) {
+            Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+            startActivity(intent);
+        }
+        // Button for search implementation
+        else if (i == R.id.imgButton_search) {
+            Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+            startActivity(intent);
+        }
+        // Button for Google Maps
+        else if (i == R.id.imgButton_maps) {
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
     public void googleLogin()
     {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -146,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                 Log.w(TAG, "Google sign in failed", e);
+                Log.w(TAG, "Google sign in failed", e);
                 // ...
             }
         }
@@ -174,11 +203,11 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("TAG", "Successfully added User............................");
 
                             finish();
-                            
+
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
-                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             // Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             // updateUI(null);
                         }

@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Button Click App</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_enter_plate">EnterPlate</string>
+    <string name="title_activity_layout_dialogmail">layout_dialogmail</string>
+    <string name="title_activity_dialog_name">DialogName</string>
+    <string name="title_activity_help">HelpActivity</string>
+
 </resources>
+

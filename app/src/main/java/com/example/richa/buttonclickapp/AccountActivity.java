@@ -46,7 +46,7 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
         // Button for help
         else if (i == R.id.button_help) {
-            // go to help page....
+            startActivity(new Intent(getApplicationContext(), HelpActivity.class));
         }
     }
 }

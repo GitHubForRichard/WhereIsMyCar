@@ -24,6 +24,9 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    //
+    private Button btnCancel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
     }
 
 
@@ -88,6 +92,8 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
         etColor = findViewById(R.id.edit_color);
         btnSubmit = findViewById(R.id.button_submit);
         btnSubmit.setOnClickListener(this);
+        btnCancel = findViewById(R.id.button_cancel);
+        btnCancel.setOnClickListener(this);
     }
 
     @Override
@@ -99,5 +105,13 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
             finish();
             startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
         }
+        // use cancel button to go back to main page
+        if (i == R.id.button_cancel) {
+            Intent intent = new Intent(this, HomepageActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
+
+
 }

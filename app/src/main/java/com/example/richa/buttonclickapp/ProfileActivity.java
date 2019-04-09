@@ -9,11 +9,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,8 +22,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TextView textColor;
 
     private Button buttonLogout;
-    private Button buttonUpdate;
+    private Button buttonUpdate;//CarInfor
     private DatabaseReference databaseReference;
+
+    //
+    private Button buttonSearchHistory;
+    private Button buttonUpdateAccount;
+    private Button buttonUpdateCarInfor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userId = user.getUid();
-
+/*
         databaseReference.child("users").child(userId).child("licensePlate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -120,16 +123,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
-
+*/
+    }
     private void initializeUI() {
         textLicensePlate = findViewById(R.id.text_license_plate);
         textBrand = findViewById(R.id.text_brand);
         textYear = findViewById(R.id.text_year);
         textColor = findViewById(R.id.text_color);
         buttonLogout = findViewById(R.id.button_log_out);
-        buttonUpdate = findViewById(R.id.button_update_profile);
+        buttonUpdateCarInfor = findViewById(R.id.button_CarInfor);
         buttonLogout.setOnClickListener(this);
-        buttonUpdate.setOnClickListener(this);
+        buttonUpdateCarInfor.setOnClickListener(this);
+        //
+        buttonUpdateAccount = findViewById(R.id.button_updateAccount);
+        buttonUpdateAccount.setOnClickListener(this);
+        buttonSearchHistory = findViewById(R.id.button_searchHistory);
+        buttonSearchHistory.setOnClickListener(this);
     }
 
     @Override
@@ -139,9 +148,25 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             firebaseAuth.signOut();
             finish();
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        } else if (i == R.id.button_update_profile) {
-            finish();
+        } else if (i == R.id.button_CarInfor) {
+
             startActivity(new Intent(getApplicationContext(), UpdateCarInfoActivity.class));
         }
+        //
+        else if (i == R.id.button_updateAccount) {
+            Intent intent = new Intent(getApplicationContext(), UserAccountActivity.class);
+            startActivity(intent);
+        } else if (i == R.id.button_searchHistory) {
+            Intent intent = new Intent(getApplicationContext(), SearchHistoryActivity.class);
+            startActivity(intent);
+        }
     }
-}
+
+    @Override
+    //when click back arrow, go to main page instead previous page
+    public void onBackPressed() {
+        Intent intent = new Intent(ProfileActivity.this, HomepageActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    }

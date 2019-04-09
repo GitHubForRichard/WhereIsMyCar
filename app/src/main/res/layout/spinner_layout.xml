@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/spinnerTarget"
+    android:id="@+id/spinner_garage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="#333333"
-    android:textSize="18sp"
+    android:background="#fcba14"
+    android:fontFamily="sans-serif-medium"
+    android:padding="10dp"
+    android:textSize="500dp"
+    android:textStyle="italic"
     />
