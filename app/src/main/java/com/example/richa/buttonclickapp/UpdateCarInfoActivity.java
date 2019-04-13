@@ -17,9 +17,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etLicensePlate;
-    private EditText etBrand;
-    private EditText etYear;
-    private EditText etColor;
     private Button btnSubmit;
 
     private FirebaseAuth firebaseAuth;
@@ -41,11 +38,8 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    public void saveCarInfo(EditText licensePlate, EditText model, EditText year, EditText color) {
+    public void saveCarInfo(EditText licensePlate) {
         String licensePlateStr = licensePlate.getText().toString().trim();
-        String brandStr = model.getText().toString().trim().toLowerCase();
-        String colorStr = color.getText().toString().trim().toLowerCase();
-        int yearInt = Integer.parseInt(year.getText().toString());
 
         FirebaseUser currUser = firebaseAuth.getCurrentUser();
 
@@ -58,38 +52,11 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
                     setValue(licensePlateStr);
         }
 
-        if (brandStr.length() > 0) {
-            databaseReference.
-                    child("users").
-                    child(currUser.getUid()).
-                    child("brand").
-                    setValue(brandStr);
-        }
-
-        if (year.getText().toString().length() > 0 && yearInt > 0) {
-            databaseReference.
-                    child("users").
-                    child(currUser.getUid()).
-                    child("year").
-                    setValue(yearInt);
-        }
-
-        if (colorStr.length() > 0) {
-            databaseReference.
-                    child("users").
-                    child(currUser.getUid()).
-                    child("color").
-                    setValue(colorStr);
-        }
-
         Log.d("TAG", "Successfully added Car Info............................");
     }
 
     private void initializeUI() {
         etLicensePlate = findViewById(R.id.edit_license_plate);
-        etBrand = findViewById(R.id.edit_brand);
-        etYear = findViewById(R.id.edit_Year);
-        etColor = findViewById(R.id.edit_color);
         btnSubmit = findViewById(R.id.button_submit);
         btnSubmit.setOnClickListener(this);
         btnCancel = findViewById(R.id.button_cancel);
@@ -100,7 +67,7 @@ public class UpdateCarInfoActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.button_submit) {
-            saveCarInfo(etLicensePlate, etBrand, etYear, etColor);
+            saveCarInfo(etLicensePlate);
             Toast.makeText(getApplicationContext(), "Saved Car Info Successfully", Toast.LENGTH_LONG).show();
             finish();
             startActivity(new Intent(getApplicationContext(), HomepageActivity.class));

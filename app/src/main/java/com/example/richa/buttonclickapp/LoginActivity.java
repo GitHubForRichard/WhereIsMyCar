@@ -204,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             // save google users' info in firebase database
                             // if the user is first time logging in
-                            if(isNewUser) {
+                            if (isNewUser) {
                                 UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
                                 FirebaseUser currUser = firebaseAuth.getCurrentUser();
                                 databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     // If sign in fails, display a message to the user.
                                     // Username or password false, display and an error
                                     // add a pop up dialog to show users entering wrong email and password
-                                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(LoginActivity.this);
+                                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(LoginActivity.this);
 
                                     dlgAlert.setMessage("Invalid email or password");
                                     dlgAlert.setTitle("Login Failed");

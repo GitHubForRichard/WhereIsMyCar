@@ -5,22 +5,18 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="149dp"
+        android:layout_marginStart="171dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="171dp"
-        android:layout_marginBottom="8dp"
         android:text="Enter Plate Number:"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <EditText
@@ -29,47 +25,60 @@
         android:layout_height="44dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="308dp"
+        android:layout_marginEnd="40dp"
         android:ems="10"
         android:hint="example:1ABC234"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/text" />
+
+    <Button
+        android:id="@+id/button_find_my_car"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="Find My Car"
+        app:layout_constraintEnd_toStartOf="@+id/button_search_history"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_plate" />
+
+    <Button
+        android:id="@+id/button_search_history"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="56dp"
+        android:text="Search History"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_plate" />
 
     <Button
         android:id="@+id/button_clear"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="209dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="5dp"
         android:background="#aa3d3d"
         android:text="Clear"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_submit"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_plate" />
+        app:layout_constraintTop_toBottomOf="@+id/button_find_my_car" />
 
     <Button
         android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="83dp"
-        android:layout_marginBottom="209dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="84dp"
         android:background="@color/common_google_signin_btn_text_dark_focused"
         android:text="Submit"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_cancel"
-        app:layout_constraintTop_toBottomOf="@+id/edit_plate" />
+        app:layout_constraintTop_toBottomOf="@+id/button_search_history" />
 </android.support.constraint.ConstraintLayout>

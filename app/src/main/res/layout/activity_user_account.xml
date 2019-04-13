@@ -7,10 +7,10 @@
     tools:context=".UserAccountActivity">
 
     <EditText
-        android:id="@+id/editText_update_email"
+        android:id="@+id/edit_update_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
@@ -21,17 +21,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_update_password"
+        android:id="@+id/edit_update_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="116dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="Update Password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_update_email" />
 
@@ -44,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_update_email" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_update_email" />
 
     <Button
         android:id="@+id/button_update_password"
@@ -57,6 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_update_password"
+        app:layout_constraintTop_toBottomOf="@+id/edit_update_password"
         app:layout_constraintVertical_bias="0.009" />
 </android.support.constraint.ConstraintLayout>

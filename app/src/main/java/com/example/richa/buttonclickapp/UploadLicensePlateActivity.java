@@ -3,11 +3,10 @@ package com.example.richa.buttonclickapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,7 +37,7 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
     ImageView imageView;
     TextView textView;
 
-    LicensePlateInfo licensePlateInfo = new LicensePlateInfo("","");
+    LicensePlateInfo licensePlateInfo = new LicensePlateInfo("", "");
 
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -53,8 +52,8 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_license_plate);
 
-        imageView = (ImageView) findViewById(R.id.image_view_search_result);
-        textView = (TextView) findViewById(R.id.textView6);
+        imageView = findViewById(R.id.image_view_search_result);
+        textView = findViewById(R.id.textView6);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -63,14 +62,10 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
     }
 
     // detect the text on the license plate image
-    public void detect()
-    {
-        if(bitmap == null)
-        {
+    public void detect() {
+        if (bitmap == null) {
             Toast.makeText(getApplicationContext(), "Bitmap is null", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+        } else {
             FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
 
             FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
@@ -98,19 +93,14 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
     }
 
     // process the text to output the final string that the image could contain
-    private void process_text(FirebaseVisionText firebaseVisionText)
-    {
+    private void process_text(FirebaseVisionText firebaseVisionText) {
         List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
-        if(blocks.size() == 0)
-        {
+        if (blocks.size() == 0) {
             Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
+        } else {
             textView.setText("");
             String licensePlateText = "";
-            for(FirebaseVisionText.TextBlock block: firebaseVisionText.getTextBlocks())
-            {
+            for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
                 String text = block.getText();
                 textView.append("\n" + text);
                 licensePlateText += text;
@@ -128,29 +118,23 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
     }
 
     // allow the photo selection from Android camera
-    public void pick_Image(View v)
-    {
+    public void pick_Image(View v) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(i,1);
+        startActivityForResult(i, 1);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == RESULT_OK)
-        {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             uri = data.getData();
-            try
-            {
+            try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
 
 //                bitmap = Bitmap.createBitmap(bitmap, 0,400,bitmap.getWidth(), 400);
 
                 imageView.setImageBitmap(bitmap);
-            }
-            catch(IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -159,14 +143,13 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
     // upload Image to Firebase Storage
     public void uploadImage(View v) {
 
-        if(uri != null)
-        {
+        if (uri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
             // place the image to firebase storage
-            final StorageReference ref = storageReference.child("images/"+ UUID.randomUUID().toString());
+            final StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
             ref.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -193,15 +176,15 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
                     });
         }

@@ -3,12 +3,10 @@ package com.example.richa.buttonclickapp;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,11 +23,26 @@ public class SearchResultActivity extends AppCompatActivity {
 
 //    private ConstraintLayout constraintLayout;
 
-//    private ImageView imageViewSearchResult1;
+    //    private ImageView imageViewSearchResult1;
 //    private ImageView imageViewSearchResult2;
 //    private ImageView imageViewSearchResult3;
     private TextView textViewNoResult;
     private Bitmap bitmap;
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +63,10 @@ public class SearchResultActivity extends AppCompatActivity {
         linearLayout.addView(searchResultTextView);
 
         // when there is no matching license plate with given input
-        if(licensePlateList.size() == 0) {
+        if (licensePlateList.size() == 0) {
             searchResultTextView.setText("Sorry.\nThere is no matching license plate");
 
-        }
-        else {
+        } else {
             searchResultTextView.setText("Search Result: ");
             // convert matching license plate photo url to bitmap and add to the list
             for (int i = 0; i < licensePlateList.size(); i++) {
@@ -63,8 +75,8 @@ public class SearchResultActivity extends AppCompatActivity {
                 bitmapList.add(eachBitMap);
             }
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000,800);
-            layoutParams.setMargins(200,0,200,0);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(1000, 800);
+            layoutParams.setMargins(200, 0, 200, 0);
 
 
             // display license plate images that match with given input
@@ -79,8 +91,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
     }
 
-    public void initializeUI()
-    {
+    public void initializeUI() {
 
         linearLayout = findViewById(R.id.linearLayout);
 
@@ -94,20 +105,5 @@ public class SearchResultActivity extends AppCompatActivity {
 //        textViewNoResult = findViewById(R.id.text_view_no_result);
 
 
-    }
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            // Log exception
-            return null;
-        }
     }
 }

@@ -5,6 +5,10 @@
     <string name="title_activity_layout_dialogmail">layout_dialogmail</string>
     <string name="title_activity_dialog_name">DialogName</string>
     <string name="title_activity_help">HelpActivity</string>
-
+    <string name="title_activity_bottom">BottomActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
 

@@ -131,8 +131,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Button for register user
         if (i == R.id.button_submit) {
             registerUser();
-        }
-        else if(i == R.id.button_cancel){
+        } else if (i == R.id.button_cancel) {
             finish();
             startActivity(new Intent(this, HomepageActivity.class));
         }

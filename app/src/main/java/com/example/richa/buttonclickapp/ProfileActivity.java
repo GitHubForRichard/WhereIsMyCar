@@ -9,38 +9,38 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth firebaseAuth;
 
     private TextView textLicensePlate;
-    private TextView textBrand;
-    private TextView textYear;
-    private TextView textColor;
+    private TextView textFirstname;
+    private TextView textLastname;
+    private TextView textPassword;
 
+    private Button buttonUpdateUserInfo;
+    private Button buttonUpdateCarInfo;
     private Button buttonLogout;
-    private Button buttonUpdate;//CarInfor
+
     private DatabaseReference databaseReference;
-
-    //
-    private Button buttonSearchHistory;
-    private Button buttonUpdateAccount;
-    private Button buttonUpdateCarInfor;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        initializeUI();
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        initializeUI();
 
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String userId = user.getUid();
-/*
+
         databaseReference.child("users").child(userId).child("licensePlate").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -68,77 +68,28 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-        databaseReference.child("users").child(userId).child("brand").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.getValue() == null) {
-                    textBrand.setText("Brand: to be Updated");
-                }
-                else {
-                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                    String brand = snapshot.getValue().toString();
-                    textBrand.setText("Brand: " + brand);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        databaseReference.child("users").child(userId).child("year").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.getValue() == null) {
-                    textBrand.setText("Year: to be Updated");
-                }
-                else {
-                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                    String year = snapshot.getValue().toString();
-                    textYear.setText("Year: " + year);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        databaseReference.child("users").child(userId).child("color").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.getValue() == null) {
-                    textColor.setText("Color: to be Updated");
-                }
-                else {
-                    System.out.println("---------------" + snapshot.getValue() + "-------------------");
-                    String color = snapshot.getValue().toString();
-                    textColor.setText("Color: " + color);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
     }
-*/
-    }
+
     private void initializeUI() {
         textLicensePlate = findViewById(R.id.text_license_plate);
-        textBrand = findViewById(R.id.text_brand);
-        textYear = findViewById(R.id.text_year);
-        textColor = findViewById(R.id.text_color);
+        textFirstname = findViewById(R.id.text_first_name);
+        textLastname = findViewById(R.id.text_last_name);
+        textPassword = findViewById(R.id.text_email);
+
+        buttonUpdateUserInfo = findViewById(R.id.button_update_car_info);
+        buttonUpdateCarInfo = findViewById(R.id.button_update_user_info);
         buttonLogout = findViewById(R.id.button_log_out);
-        buttonUpdateCarInfor = findViewById(R.id.button_CarInfor);
+
+        buttonUpdateCarInfo.setOnClickListener(this);
+        buttonUpdateUserInfo.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
-        buttonUpdateCarInfor.setOnClickListener(this);
-        //
-        buttonUpdateAccount = findViewById(R.id.button_updateAccount);
-        buttonUpdateAccount.setOnClickListener(this);
-        buttonSearchHistory = findViewById(R.id.button_searchHistory);
-        buttonSearchHistory.setOnClickListener(this);
+
+        // Users logged in with Gmail account should not be able to change their account info
+        for (UserInfo user : firebaseAuth.getCurrentUser().getProviderData()) {
+            if (user.getProviderId().equals("google.com")) {
+                buttonUpdateCarInfo.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -147,26 +98,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         if (i == R.id.button_log_out) {
             firebaseAuth.signOut();
             finish();
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        } else if (i == R.id.button_CarInfor) {
-
+            startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
+        } else if (i == R.id.button_update_car_info) {
+            finish();
             startActivity(new Intent(getApplicationContext(), UpdateCarInfoActivity.class));
-        }
-        //
-        else if (i == R.id.button_updateAccount) {
-            Intent intent = new Intent(getApplicationContext(), UserAccountActivity.class);
-            startActivity(intent);
-        } else if (i == R.id.button_searchHistory) {
-            Intent intent = new Intent(getApplicationContext(), SearchHistoryActivity.class);
-            startActivity(intent);
-        }
-    }
+        } else if (i == R.id.button_update_user_info) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), UserAccountActivity.class));
 
-    @Override
-    //when click back arrow, go to main page instead previous page
-    public void onBackPressed() {
-        Intent intent = new Intent(ProfileActivity.this, HomepageActivity.class);
-        startActivity(intent);
-        finish();
+        }
     }
-    }
+}
