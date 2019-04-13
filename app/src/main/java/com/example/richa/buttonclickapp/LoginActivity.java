@@ -1,6 +1,8 @@
 package com.example.richa.buttonclickapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -192,15 +194,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            // check if the logged in user is a new user
+                            boolean isNewUser = task.getResult().getAdditionalUserInfo().isNewUser();
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             // save google users' info in firebase database
-                            UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
-                            FirebaseUser currUser = firebaseAuth.getCurrentUser();
-                            databaseReference.child(currUser.getUid()).setValue(userInfo);
-                            Log.d("TAG", "Successfully added User............................");
+                            // if the user is first time logging in
+                            if(isNewUser) {
+                                UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
+                                FirebaseUser currUser = firebaseAuth.getCurrentUser();
+                                databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
+                                Log.d("TAG", "This is a new user from Google, Successfully added User............................");
+                            }
 
                             finish();
 
@@ -250,7 +259,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 else
                                 {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    // Username or password false, display and an error
+                                    // add a pop up dialog to show users entering wrong email and password
+                                    AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(LoginActivity.this);
+
+                                    dlgAlert.setMessage("Invalid email or password");
+                                    dlgAlert.setTitle("Login Failed");
+                                    dlgAlert.setPositiveButton("Try Again", null);
+                                    dlgAlert.setCancelable(true);
+                                    dlgAlert.create().show();
+
+                                    dlgAlert.setPositiveButton("Try Again",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            });
+
+//                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
