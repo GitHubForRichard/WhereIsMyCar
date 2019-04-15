@@ -45,38 +45,27 @@ public class HomepageActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        // account buttom displays profile page if user is logged in
-        if (loggedIn == true) {
-            if (i == R.id.imgButton_account) {
-                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                startActivity(intent);
+        // account button displays profile page if user is logged in
+        if (i == R.id.imgButton_account) {
+
+            // checking if there is a user logging in already
+            if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+                finish();
+                startActivity(new Intent(this, AccountActivity.class));
+            } else {
+                startActivity(new Intent(this, ProfileActivity.class));
             }
-            // Button for search implementation
-            else if (i == R.id.imgButton_search) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                startActivity(intent);
-            }
-            // Button for Google Maps
-            else if (i == R.id.imgButton_maps) {
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(intent);
-            }
-        } else {//account button display sign in/sign up page for guest user
-            if (i == R.id.imgButton_account) {
-                Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-                startActivity(intent);
-            }
-            // Button for search implementation
-            else if (i == R.id.imgButton_search) {
-                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-                startActivity(intent);
-            }
-            // Button for Google Maps
-            else if (i == R.id.imgButton_maps) {
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(intent);
-            }
+
+        }
+        // Button for search implementation
+        else if (i == R.id.imgButton_search) {
+            Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+            startActivity(intent);
+        }
+        // Button for Google Maps
+        else if (i == R.id.imgButton_maps) {
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            startActivity(intent);
         }
     }
-
 }

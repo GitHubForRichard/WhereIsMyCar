@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.richa.buttonclickapp.Object.UserInfo;
+import com.example.richa.buttonclickapp.Object.UserAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -205,7 +205,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             // save google users' info in firebase database
                             // if the user is first time logging in
                             if (isNewUser) {
-                                UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
+                                UserAccount userInfo = new UserAccount(user.getEmail(), "", "", "");
                                 FirebaseUser currUser = firebaseAuth.getCurrentUser();
                                 databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
                                 Log.d("TAG", "This is a new user from Google, Successfully added User............................");
