@@ -40,6 +40,7 @@ public class GetPlateNumberActivity extends AppCompatActivity implements View.On
     }
 
     private void initializeUI() {
+
         btnFindMyCar = findViewById(R.id.button_find_my_car);
         btnSearchHistory = findViewById(R.id.button_search_history);
         btnSubmit = findViewById(R.id.button_submit);
@@ -50,6 +51,14 @@ public class GetPlateNumberActivity extends AppCompatActivity implements View.On
         btnSearchHistory.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         btnClear.setOnClickListener(this);
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            btnFindMyCar.setVisibility(View.GONE);
+            btnSearchHistory.setVisibility(View.GONE);
+        } else {
+            btnFindMyCar.setVisibility(View.VISIBLE);
+            btnSearchHistory.setVisibility(View.VISIBLE);
+        }
 
         etPlate.addTextChangedListener(new TextWatcher() {
             @Override
