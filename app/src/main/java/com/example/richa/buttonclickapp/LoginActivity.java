@@ -33,7 +33,11 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements
+        View.OnClickListener {
+
+
+
 
     private Button buttonLogin;
     private Button btnCancel;
@@ -134,27 +138,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonMaps.setOnClickListener(this);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void onClick(View v) {
         int i = v.getId();
         // Button for account page
-        if (i == R.id.imgButton_account) {
-            Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-            startActivity(intent);
-        }
+        if (i == R.id.imgButton_account)
+            startActivity(new Intent(getApplicationContext(), AccountActivity.class));
         // Button for search implementation
-        else if (i == R.id.imgButton_search) {
-            Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
-            startActivity(intent);
-        }
+        else if (i == R.id.imgButton_search)
+            startActivity(new Intent(getApplicationContext(), SearchActivity.class));
         // Button for Google Maps
-        else if (i == R.id.imgButton_maps) {
-            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-            startActivity(intent);
-        }
+        else if (i == R.id.imgButton_maps)
+            startActivity(new Intent(getApplicationContext(), MapsActivity.class));
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public void googleLogin()
     {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

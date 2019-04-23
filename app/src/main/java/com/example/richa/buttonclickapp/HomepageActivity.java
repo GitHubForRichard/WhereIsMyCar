@@ -21,8 +21,6 @@ public class HomepageActivity extends AppCompatActivity implements
     private ImageButton buttonSearch;
     private ImageButton buttonMaps;
 
-    private FirebaseAuth firebaseAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
