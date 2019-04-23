@@ -14,8 +14,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-
+public class SearchActivity extends AppCompatActivity implements
+        View.OnClickListener,
+        AdapterView.OnItemSelectedListener {
 
     private Spinner garageSpinner;
     private Spinner searchSpinner;
@@ -114,7 +115,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     //set up different activity based on spinner content:plate or car model
-
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 //Onselectingaspinneritem
         String item = parent.getItemAtPosition(position).toString();
@@ -136,6 +137,3 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 }
-
-
-

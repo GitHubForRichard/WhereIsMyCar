@@ -19,16 +19,13 @@ public class GetCarModelActivity extends AppCompatActivity implements View.OnCli
     private void initializeUI() {
         btnSubmit = findViewById(R.id.button_submit);
 
-
         btnSubmit.setOnClickListener(this);
-
     }
 
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.button_submit) {
-
-            Intent intent = new Intent(getApplicationContext(), DisplayResultActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
             startActivity(intent);
         }
     }

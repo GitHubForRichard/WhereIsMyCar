@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -26,6 +27,9 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
+            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:value="ocr" />
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
         <meta-data
@@ -34,6 +38,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
+        <!-- To use multiple models: android:value="ocr,model2,model3" -->
         <activity android:name=".HomepageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,14 +46,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".AccountActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".AccountActivity" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".GetPlateNumberActivity" />
         <activity android:name=".GetCarModelActivity" />
-        <activity android:name=".DisplayResultActivity" />
         <activity android:name=".UpdateUserInfoActivity" />
         <activity android:name=".DialogMail" />
         <activity
@@ -61,6 +66,9 @@
             android:name=".HelpActivity"
             android:label="@string/title_activity_help"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SearchByLicenseActivity" />
+        <activity android:name=".SearchResultActivity" />
+        <activity android:name=".UploadLicensePlateActivity" />
     </application>
 
 </manifest>

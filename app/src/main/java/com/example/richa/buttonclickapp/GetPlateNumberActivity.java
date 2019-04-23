@@ -6,25 +6,30 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.richa.buttonclickapp.Object.SearchHistory;
+import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class GetPlateNumberActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private EditText etPlate;
     private Button btnFindMyCar;
     private Button btnSearchHistory;
     private Button btnSubmit;
     private Button btnClear;
-    private EditText etPlate;
+    private Button btnUploadImage;
 
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -36,21 +41,24 @@ public class GetPlateNumberActivity extends AppCompatActivity implements View.On
 
         initializeUI();
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
     private void initializeUI() {
 
+        etPlate = findViewById(R.id.edit_plate);
         btnFindMyCar = findViewById(R.id.button_find_my_car);
         btnSearchHistory = findViewById(R.id.button_search_history);
         btnSubmit = findViewById(R.id.button_submit);
         btnClear = findViewById(R.id.button_clear);
-        etPlate = findViewById(R.id.edit_plate);
+        btnUploadImage = findViewById(R.id.button_upload_img);
 
         btnFindMyCar.setOnClickListener(this);
         btnSearchHistory.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
         btnClear.setOnClickListener(this);
+        btnUploadImage.setOnClickListener(this);
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             btnFindMyCar.setVisibility(View.GONE);
@@ -105,6 +113,49 @@ public class GetPlateNumberActivity extends AppCompatActivity implements View.On
         }
     }
 
+    // Go through the database to find the car image that matches users' input license plate
+    private void searchCar() {
+        // Get the license plate input
+        final String searchPlate = etPlate.getText().toString().trim();
+
+        // Go through the list and find the cars license plate that contain the searchPlate
+        databaseReference.child("cars")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String eachPlateText;
+
+                        ArrayList<LicensePlateInfo> licensePlateList = new ArrayList<>();
+
+                        // Go through each child under "cars" parents
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                            if (licensePlateList.size() > 3) {
+                                break;
+                            }
+
+                            LicensePlateInfo licensePlateInfo = snapshot.getValue(LicensePlateInfo.class);
+                            eachPlateText = licensePlateInfo.getLicensePlateText();
+                            System.out.println(eachPlateText);
+                            if (eachPlateText.contains(searchPlate)) {
+                                Log.d("TAG", "The URL for matching Text is: " + licensePlateInfo.getPhotoUrl());
+                                licensePlateList.add(licensePlateInfo);
+                            }
+                        }
+                        Intent intent = new Intent(getBaseContext(), SearchResultActivity.class);
+                        Bundle args = new Bundle();
+                        args.putSerializable("ARRAYLIST", licensePlateList);
+                        intent.putExtra("BUNDLE", args);
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -112,11 +163,13 @@ public class GetPlateNumberActivity extends AppCompatActivity implements View.On
         if (i == R.id.button_find_my_car) {
             findMyCar();
         } else if (i == R.id.button_search_history) {
-            startActivity(new Intent(getApplicationContext(), SearchHistory.class));
+            startActivity(new Intent(getApplicationContext(), SearchHistoryActivity.class));
         } else if (i == R.id.button_submit) {
-            startActivity(new Intent(getApplicationContext(), DisplayResultActivity.class));
+            searchCar();
         } else if (i == R.id.button_clear) {
             etPlate.setText("");
+        } else if (i == R.id.button_upload_img) {
+            startActivity(new Intent(getApplicationContext(), UploadLicensePlateActivity.class));
         }
     }
 }

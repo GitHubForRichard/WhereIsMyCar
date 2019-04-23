@@ -9,7 +9,11 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,32 +32,43 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class UploadLicensePlateActivity extends AppCompatActivity {
+public class UploadLicensePlateActivity extends AppCompatActivity implements
+        AdapterView.OnItemSelectedListener {
 
-    ImageView imageView;
-    TextView textView;
+    private static final int PICK_IMAGE = 1;
+    private static final int IMAGE_RECOGNITION = 2;
 
-    LicensePlateInfo licensePlateInfo = new LicensePlateInfo("", "");
+    private ImageView ivResult;
+    private TextView tvResult;
+    private EditText etFloor;
+    private EditText etLocation;
+    private Spinner garageSpinner;
 
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    DatabaseReference databaseReference;
+    private int floor;
+    private String location;
+    private String garage;
 
-    Uri uri;
+    private LicensePlateInfo licensePlateInfo
+            = new LicensePlateInfo("", "", 0, "", "");
 
-    Bitmap bitmap;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
+    private DatabaseReference databaseReference;
+
+    private Uri uri;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_license_plate);
 
-        imageView = findViewById(R.id.image_view_search_result);
-        textView = findViewById(R.id.textView6);
+        // Initialize UI components, and its functionality.
+        initializeUI();
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -61,13 +76,13 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
-    // detect the text on the license plate image
+    // Detect text on license plate image.
     public void detect() {
         if (bitmap == null) {
             Toast.makeText(getApplicationContext(), "Bitmap is null", Toast.LENGTH_LONG).show();
         } else {
-            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
 
+            FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(bitmap);
             FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance()
                     .getOnDeviceTextRecognizer();
             Task<FirebaseVisionText> result =
@@ -76,7 +91,6 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(FirebaseVisionText firebaseVisionText) {
                                     // Task completed successfully
-                                    // ...
                                     process_text(firebaseVisionText);
                                 }
                             })
@@ -85,80 +99,97 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
                                         @Override
                                         public void onFailure(Exception e) {
                                             // Task failed with an exception
-                                            // ...
                                             e.printStackTrace();
                                         }
                                     });
         }
     }
 
-    // process the text to output the final string that the image could contain
+    // Process text to output the final string that the image could contain.
     private void process_text(FirebaseVisionText firebaseVisionText) {
-        List<FirebaseVisionText.TextBlock> blocks = firebaseVisionText.getTextBlocks();
-        if (blocks.size() == 0) {
-            Toast.makeText(getApplicationContext(), "No text detected", Toast.LENGTH_LONG).show();
-        } else {
-            textView.setText("");
-            String licensePlateText = "";
-            for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
-                String text = block.getText();
-                textView.append("\n" + text);
+        floor = Integer.parseInt(etFloor.getText().toString());
+        location = etLocation.getText().toString().trim();
+        tvResult.setText("");
+        String licensePlateText = "";
+
+        for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
+            for (FirebaseVisionText.Line line : block.getLines()) {
+                Log.d("Testing line", line.getText());
+                String text = line.getText();
+                tvResult.append(text);
                 licensePlateText += text;
             }
-
-            licensePlateInfo.setLicensePlateText(licensePlateText);
-
-            Log.d("TAGS", "License Plate Text Detected:" + licensePlateText);
-
-            databaseReference.child("cars").child(UUID.randomUUID().toString()).setValue(licensePlateInfo);
-
-            Log.d("TAG", "Successfully added the uploaded car info............................");
-
         }
+
+        licensePlateInfo.setLicensePlateText(licensePlateText);
+        licensePlateInfo.setFloor(floor);
+        licensePlateInfo.setLocation(location);
+        licensePlateInfo.setGarage(garage);
+
+        Log.d("TAGS", "License Plate Text Detected:" + licensePlateText);
+        databaseReference.child("cars").child(UUID.randomUUID().toString()).setValue(licensePlateInfo);
+        Log.d("TAG", "Successfully added the uploaded car info............................");
     }
 
-    // allow the photo selection from Android camera
+    // Allow the photo selection from Android camera.
     public void pick_Image(View v) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(i, 1);
     }
 
+    // Perform cropping the letters and numbers from license plate. (Manual)
+    private void performCrop() {
+        // Call the standard crop action intent (some user device may not support)
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        // Indicate image type and Uri
+        cropIntent.setDataAndType(uri, "image/*");
+        // Set crop properties
+        cropIntent.putExtra("crop", "true");
+        // Retrieve data on return
+        cropIntent.putExtra("return-data", true);
+        // Start the activity - we handle returning in onActivityResult
+        startActivityForResult(cropIntent, 2);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+
+        // Done with picking image -> perform cropping.
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             uri = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            performCrop();
+        }
 
-//                bitmap = Bitmap.createBitmap(bitmap, 0,400,bitmap.getWidth(), 400);
-
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        // After cropping, get returned data to image recognition.
+        if (requestCode == IMAGE_RECOGNITION && resultCode == RESULT_OK) {
+            // Get returned data
+            Bundle extras = data.getExtras();
+            // Get  cropped bitmap
+            bitmap = extras.getParcelable("data");
+            ivResult.setImageBitmap(bitmap);
         }
     }
 
-    // upload Image to Firebase Storage
+    // Upload Image to Firebase Storage
     public void uploadImage(View v) {
-
         if (uri != null) {
+
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
-            // place the image to firebase storage
+            // Place the image to firebase storage
             final StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
             ref.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            // call detect function to get the text within its method
+                            // Call detect function to get the text within its method
                             detect();
 
-                            // get the download url from the image that is just uploaded
+                            // Get the download url from the image that is just uploaded
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -188,5 +219,49 @@ public class UploadLicensePlateActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void initializeUI() {
+
+        List<String> garage_categories = new ArrayList<>();
+        garage_categories.add("Which garage did you park?");
+        garage_categories.add("South Garage");
+        garage_categories.add("North Garage");
+        garage_categories.add("West Garage");
+
+        ivResult = findViewById(R.id.image_view_search_result);
+        tvResult = findViewById(R.id.text_result);
+        etFloor = findViewById(R.id.edit_floor);
+        etLocation = findViewById(R.id.edit_location);
+        garageSpinner = findViewById(R.id.spinner_garage);
+
+        ArrayAdapter<String> garageAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, garage_categories);
+        garageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        garageSpinner.setAdapter(garageAdapter);
+
+        garageSpinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//Onselectingaspinneritem
+        String item = parent.getItemAtPosition(position).toString();
+
+//Showing selected spinneritem
+        Toast.makeText(parent.getContext(), "Selected:" + item, Toast.LENGTH_LONG).show();
+
+        if (item.equals("South Garage")) {
+            garage = "South Garage";
+        } else if (item.equals("North Garage")) {
+            garage = "North Garage";
+        } else if (item.equals("West Garage")) {
+            garage = "West Garage";
+        } else
+            garage = null;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
