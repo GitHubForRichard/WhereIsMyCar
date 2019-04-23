@@ -37,6 +37,8 @@ public class SearchByLicenseActivity extends AppCompatActivity {
         // Get the license plate input
         final String searchPlate = etLicensePlate.getText().toString().trim();
 
+
+
         // Go through the list and find the cars license plate that contain the searchPlate
         databaseReference.child("cars")
                 .addListenerForSingleValueEvent(new ValueEventListener() {

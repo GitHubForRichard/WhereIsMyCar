@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.richa.buttonclickapp.Object.LicensePlateInfo;
+import com.example.richa.buttonclickapp.Object.SearchHistory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class GetPlateNumberActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -117,6 +119,20 @@ public class GetPlateNumberActivity extends AppCompatActivity implements View.On
     private void searchCar() {
         // Get the license plate input
         final String searchPlate = etPlate.getText().toString().trim();
+
+        // save user's search result to search collection on Firebase
+        if(firebaseAuth.getUid() != null){
+            String userId = firebaseAuth.getUid();
+            SearchHistory searchHistory = new SearchHistory(userId, searchPlate);
+            databaseReference.child("searches").child(UUID.randomUUID().toString()).setValue(searchHistory);
+        }
+
+        if(searchPlate.length() < 5)
+        {
+            Toast.makeText(this, "We needs at least five characters to search", Toast.LENGTH_LONG).show();
+            return;
+        }
+
 
         // Go through the list and find the cars license plate that contain the searchPlate
         databaseReference.child("cars")
