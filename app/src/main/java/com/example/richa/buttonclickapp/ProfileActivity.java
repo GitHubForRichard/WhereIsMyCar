@@ -73,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initializeUI() {
 
-        textEmail = findViewById(R.id.text_email);
+        textEmail = findViewById(R.id.text_forgot_password);
         textLicensePlate = findViewById(R.id.text_license_plate);
         textFirstname = findViewById(R.id.text_first_name);
         textLastname = findViewById(R.id.text_last_name);

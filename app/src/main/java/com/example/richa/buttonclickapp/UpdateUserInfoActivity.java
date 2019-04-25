@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +28,9 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
     private Button buttonEditLicensePlate;
     private Button buttonResetPassword;
     private Button buttonSkip;
+
+    private TextView textViewForgotPassword;
+    private View forgotPasswordHorizontalLine;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
@@ -94,9 +99,9 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void resetPassword() {
-
-    }
+//    private void resetPassword() {
+//
+//    }
 
     private void initializeUI() {
         editLastname = findViewById(R.id.edit_lastname_input);
@@ -106,6 +111,18 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
         buttonEditLicensePlate = findViewById(R.id.button_edit_license_plate);
         buttonResetPassword = findViewById(R.id.button_reset_password);
         buttonSkip = findViewById(R.id.button_skip);
+        textViewForgotPassword = findViewById(R.id.text_forgot_password);
+        forgotPasswordHorizontalLine = findViewById(R.id.view3);
+
+        // user logged in from Google cannot update password in our platform
+        for(UserInfo user: firebaseAuth.getCurrentUser().getProviderData())
+        {
+            if(user.getProviderId().equals("google.com")){
+                buttonResetPassword.setVisibility(View.GONE);
+                textViewForgotPassword.setVisibility(View.GONE);
+                forgotPasswordHorizontalLine.setVisibility(View.GONE);
+            }
+        }
 
         buttonEditName.setOnClickListener(this);
         buttonEditLicensePlate.setOnClickListener(this);
@@ -118,7 +135,9 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
         int i = v.getId();
         if (i == R.id.button_edit_name) editName();
         if (i == R.id.button_edit_license_plate) editLicensePlate();
-        if (i == R.id.button_reset_password) resetPassword();
+        if (i == R.id.button_reset_password) {
+            startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
+        }
         if (i == R.id.button_skip) {
             startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
         }
