@@ -25,9 +25,9 @@ public class SearchByLicenseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_by_license);
+        //setContentView(R.layout.activity_search_by_license);
 
-        initializeUI();
+        //initializeUI();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
     }
@@ -36,6 +36,7 @@ public class SearchByLicenseActivity extends AppCompatActivity {
     public void searchCar(View v) {
         // Get the license plate input
         final String searchPlate = etLicensePlate.getText().toString().trim();
+
 
         // Go through the list and find the cars license plate that contain the searchPlate
         databaseReference.child("cars")
@@ -75,7 +76,7 @@ public class SearchByLicenseActivity extends AppCompatActivity {
                 });
     }
 
-    private void initializeUI() {
-        etLicensePlate = findViewById(R.id.edit_license_plate);
-    }
+    //private void initializeUI() {
+    //    etLicensePlate = findViewById(R.id.edit_license_plate);
+    //}
 }

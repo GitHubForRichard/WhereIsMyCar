@@ -8,19 +8,22 @@ public class LicensePlateInfo implements Serializable {
     private String licensePlateText;
     private int floor;
     private String location;
+    private String garage;
 
     public LicensePlateInfo() {}
 
-    public LicensePlateInfo(String photoUrl, String licensePlateText, int floor, String location) {
+    public LicensePlateInfo(String photoUrl, String licensePlateText, int floor, String location, String garage) {
         this.photoUrl = photoUrl;
         this.licensePlateText = licensePlateText;
         this.floor = floor;
         this.location = location;
+        this.garage = garage;
     }
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
     public void setLicensePlateText(String licensePlateText) {
         this.licensePlateText = licensePlateText;
     }
@@ -49,4 +52,11 @@ public class LicensePlateInfo implements Serializable {
         this.location = location;
     }
 
+    public String getGarage() {
+        return garage;
+    }
+
+    public void setGarage(String garage) {
+        this.garage = garage;
+    }
 }

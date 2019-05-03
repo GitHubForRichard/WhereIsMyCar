@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.richa.buttonclickapp.Object.UserInfo;
+import com.example.richa.buttonclickapp.Object.UserAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnSubmit;
+    private Button btnCancel;
+
     private EditText etEmail;
     private EditText etPassword;
 
@@ -45,10 +47,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void initializeUI() {
         progressDialog = new ProgressDialog(this);
         btnSubmit = findViewById(R.id.button_submit);
+        btnCancel = findViewById(R.id.button_cancel);
         etEmail = findViewById(R.id.edit_email);
         etPassword = findViewById(R.id.edit_password);
 
         btnSubmit.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
     }
 
     private void initializeFirebase() {
@@ -101,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             // save user info in Firebase database
                             String email = etEmail.getText().toString().trim();
-                            UserInfo userInfo = new UserInfo(email, "", "", "", 1900);
+                            UserAccount userInfo = new UserAccount(email, "", "", "");
                             FirebaseUser currUser = firebaseAuth.getCurrentUser();
                             databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
 
@@ -109,9 +113,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                             progressDialog.dismiss();
                             finish();
-                            //startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                            startActivity(new Intent(getApplicationContext(), UpdateCarInfoActivity.class));
-                            //Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), UpdateUserInfoActivity.class));
                         } else {
                             Log.w("TAG", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegisterActivity.this, "Could not Register, Please Try Again...", Toast.LENGTH_SHORT).show();
@@ -127,6 +129,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         // Button for register user
         if (i == R.id.button_submit) {
             registerUser();
+        } else if (i == R.id.button_cancel) {
+            finish();
+            startActivity(new Intent(this, HomepageActivity.class));
         }
     }
 }

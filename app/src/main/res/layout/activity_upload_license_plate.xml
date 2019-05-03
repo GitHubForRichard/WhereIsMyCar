@@ -42,6 +42,18 @@
         app:layout_constraintTop_toBottomOf="@+id/image_view_search_result"
         app:layout_constraintVertical_bias="0.0" />
 
+    <Spinner
+        android:id="@+id/spinner_garage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/common_google_signin_btn_text_dark_pressed"
+        android:dropDownWidth="wrap_content"
+        android:spinnerMode="dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_location" />
+
     <EditText
         android:id="@+id/edit_floor"
         android:layout_width="wrap_content"

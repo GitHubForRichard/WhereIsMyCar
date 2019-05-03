@@ -24,9 +24,25 @@ public class SearchResultActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private TextView textFloor;
     private TextView textLocation;
+    private TextView textGarage;
 
     private ArrayList<LicensePlateInfo> licensePlateList;
     private ArrayList<Bitmap> bitmapList;
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +57,9 @@ public class SearchResultActivity extends AppCompatActivity {
         bitmapList = new ArrayList<>();
 
         // When there is no matching license plate with given input
-        if(licensePlateList.size() == 0) {
+        if (licensePlateList.size() == 0) {
             textFloor.setText("Sorry.\nThere is no matching license plate");
-        }
-        else {
+        } else {
             // Convert matching license plate photo url to bitmap and add to the list
             for (int i = 0; i < licensePlateList.size(); i++) {
                 Log.d("TAG", "Photo Url: " + licensePlateList.get(i).getPhotoUrl());
@@ -52,9 +67,10 @@ public class SearchResultActivity extends AppCompatActivity {
                 bitmapList.add(eachBitMap);
                 textFloor.setText(
                         "Your car is located at the " +
-                                String.valueOf(licensePlateList.get(i).getFloor()) + " floor");
+                                licensePlateList.get(i).getFloor() + " floor");
                 textLocation.setText("In spot " +
                         licensePlateList.get(i).getLocation());
+                textGarage.setText("At the " + licensePlateList.get(i).getGarage());
             }
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(600, 300);
@@ -75,20 +91,6 @@ public class SearchResultActivity extends AppCompatActivity {
         linearLayout = findViewById(R.id.linearLayout);
         textFloor = findViewById(R.id.text_floor);
         textLocation = findViewById(R.id.text_location);
-    }
-
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            // Log exception
-            return null;
-        }
+        textGarage = findViewById(R.id.text_garage);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.richa.buttonclickapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,10 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.richa.buttonclickapp.Object.UserInfo;
+import com.example.richa.buttonclickapp.Object.UserAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,29 +33,29 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements
+        View.OnClickListener {
+
+
+
 
     private Button buttonLogin;
     private Button btnCancel;
     private SignInButton buttonGoogleLogin;
     private EditText editTextEmail;
     private EditText editTextPassword;
-
     private GoogleSignInClient mGoogleSignInClient;
-
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-
     private static int RC_SIGN_IN = 1;
     private static final String TAG = "LOGIN_ACTIVITY";
-
     private TextView textViewSignup;
-
     private ProgressDialog progressDialog;
-
     private FirebaseAuth firebaseAuth;
-
     private DatabaseReference databaseReference;
+    //////////////////////////////////////////////////////////////
+    private ImageButton buttonAccount;
+    private ImageButton buttonSearch;
+    private ImageButton buttonMaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        if(firebaseAuth.getCurrentUser() != null)
-        {
+        if (firebaseAuth.getCurrentUser() != null) {
             // if the user has already logged in'
             finish();
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -91,8 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         View.OnClickListener myOnClickListener = new View.OnClickListener(){
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 if(v == buttonLogin) {
                     userLogin();
                 }
@@ -103,13 +104,11 @@ public class LoginActivity extends AppCompatActivity {
 //                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //                }
 
-                if(v == buttonGoogleLogin)
-                {
+                if (v == buttonGoogleLogin) {
                     googleLogin();
                 }
 
-                if(v == btnCancel)
-                {
+                if (v == btnCancel) {
                     finish();
                     startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
                 }
@@ -121,11 +120,40 @@ public class LoginActivity extends AppCompatActivity {
         buttonGoogleLogin.setOnClickListener(myOnClickListener);
         btnCancel.setOnClickListener(myOnClickListener);
 
-
+        initializeUI();
     }
 
-    public void googleLogin()
-    {
+    //////////////////////////////////////////////////////////////////////////////
+    private void initializeUI() {
+        buttonAccount = findViewById(R.id.imgButton_account);
+        buttonAccount.setImageResource(R.drawable.account_icon);
+
+        buttonSearch = findViewById(R.id.imgButton_search);
+        buttonSearch.setImageResource(R.drawable.search_icon);
+
+        buttonMaps = findViewById(R.id.imgButton_maps);
+        buttonMaps.setImageResource(R.drawable.google_icon);
+        buttonAccount.setOnClickListener(this);
+        buttonSearch.setOnClickListener(this);
+        buttonMaps.setOnClickListener(this);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void onClick(View v) {
+        int i = v.getId();
+        // Button for account page
+        if (i == R.id.imgButton_account)
+            startActivity(new Intent(getApplicationContext(), AccountActivity.class));
+            // Button for search implementation
+        else if (i == R.id.imgButton_search)
+            startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+            // Button for Google Maps
+        else if (i == R.id.imgButton_maps)
+            startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void googleLogin() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -146,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
 
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                 Log.w(TAG, "Google sign in failed", e);
+                Log.w(TAG, "Google sign in failed", e);
                 // ...
             }
         }
@@ -163,22 +191,29 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            // check if the logged in user is a new user
+                            boolean isNewUser = task.getResult().getAdditionalUserInfo().isNewUser();
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = firebaseAuth.getCurrentUser();
 
                             // save google users' info in firebase database
-                            UserInfo userInfo = new UserInfo(user.getEmail(), "", "", "", 1900);
-                            FirebaseUser currUser = firebaseAuth.getCurrentUser();
-                            databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
-                            Log.d("TAG", "Successfully added User............................");
+                            // if the user is first time logging in
+                            if (isNewUser) {
+                                UserAccount userInfo = new UserAccount(user.getEmail(), "", "", "");
+                                FirebaseUser currUser = firebaseAuth.getCurrentUser();
+                                databaseReference.child("users").child(currUser.getUid()).setValue(userInfo);
+                                Log.d("TAG", "This is a new user from Google, Successfully added User............................");
+                            }
 
                             finish();
-                            
+
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
-                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             // Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             // updateUI(null);
                         }
@@ -221,7 +256,24 @@ public class LoginActivity extends AppCompatActivity {
                                 else
                                 {
                                     // If sign in fails, display a message to the user.
-                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    // Username or password false, display and an error
+                                    // add a pop up dialog to show users entering wrong email and password
+                                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(LoginActivity.this);
+
+                                    dlgAlert.setMessage("Invalid email or password");
+                                    dlgAlert.setTitle("Login Failed");
+                                    dlgAlert.setPositiveButton("Try Again", null);
+                                    dlgAlert.setCancelable(true);
+                                    dlgAlert.create().show();
+
+                                    dlgAlert.setPositiveButton("Try Again",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                }
+                                            });
+
+//                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
