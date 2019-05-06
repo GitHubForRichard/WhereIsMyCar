@@ -16,7 +16,7 @@ Open Android Studio and locate the folder of the cloned project
 
 Run on "app" folder
 
-# Tool Used
+# Tools Used
 
 - Firebase - Backend Storage
 - Android Studio - Frontend Design
