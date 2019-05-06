@@ -6,91 +6,149 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
+    <ImageView
+        android:layout_width="412dp"
+        android:layout_height="324dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/grad"
+        tools:layout_editor_absoluteX="-2dp"
+        tools:layout_editor_absoluteY="-7dp" />
+
+    <Button
+        android:id="@+id/button_update_user_info"
+        android:layout_width="37dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:background="@android:color/transparent"
+        android:foreground="@drawable/icon_update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_user_icon"
+        android:layout_width="47dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="104dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_empty_license_plate"
+        app:srcCompat="@drawable/user_icon" />
+
+
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Your Profile"
+        android:layout_marginTop="72dp"
+        android:text="Profile"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textColor="#202832"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_forgot_password"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:textAlignment="center"
+        android:id="@+id/text_email"
+        android:layout_width="265dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Email"
+        android:textAlignment="textStart"
+        android:textColor="#202832"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_email_icon"
+        app:layout_constraintTop_toBottomOf="@+id/text_first_name" />
+
+    <ImageView
+        android:id="@+id/imageView_empty_license_plate"
+        android:layout_width="229dp"
+        android:layout_height="115dp"
+        android:layout_below="@id/text_license_plate"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text" />
+        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:srcCompat="@drawable/empty_license_plate" />
 
     <TextView
         android:id="@+id/text_license_plate"
-        android:layout_width="wrap_content"
-        android:layout_height="27dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="191dp"
+        android:layout_height="38dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="license Plate"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textColor="#202832"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_empty_license_plate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_forgot_password" />
+        app:layout_constraintTop_toTopOf="@+id/imageView_empty_license_plate"
+        app:layout_constraintVertical_bias="0.649" />
 
     <TextView
         android:id="@+id/text_first_name"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="112dp"
+        android:text="First Name"
         android:textAlignment="center"
+        android:textColor="#202832"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_license_plate" />
+        app:layout_constraintStart_toEndOf="@+id/imageView_user_icon"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_empty_license_plate" />
 
 
     <TextView
         android:id="@+id/text_last_name"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="112dp"
         android:layout_marginEnd="16dp"
+        android:text="Last Name"
         android:textAlignment="center"
+        android:textColor="#202832"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_first_name" />
-
-    <Button
-        android:id="@+id/button_update_user_info"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Update Account Information"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_last_name" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/text_first_name"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_empty_license_plate" />
 
     <Button
         android:id="@+id/button_log_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="72dp"
         android:background="#aa3d3d"
         android:text="Log out"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_update_user_info" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_email_icon" />
+
+
+    <ImageView
+        android:id="@+id/imageView_email_icon"
+        android:layout_width="47dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="80dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_email"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_user_icon"
+        app:srcCompat="@drawable/email_icon" />
+
+
 </android.support.constraint.ConstraintLayout>
