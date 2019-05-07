@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,13 +23,15 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
     private EditText editFirstname;
     private EditText editLastname;
     private EditText editLicensePlate;
-    private Button buttonEditName;
-    private Button buttonEditLicensePlate;
+    //    private Button buttonEditName;
+//    private Button buttonEditLicensePlate;
     private Button buttonResetPassword;
-    private Button buttonSkip;
+    //    private Button buttonSkip;
+    private Button buttonDone;
+    private Button buttonCancel;
 
-    private TextView textViewForgotPassword;
-    private View forgotPasswordHorizontalLine;
+//    private TextView textViewForgotPassword;
+//    private View forgotPasswordHorizontalLine;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
@@ -107,38 +108,49 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
         editLastname = findViewById(R.id.edit_lastname_input);
         editFirstname = findViewById(R.id.edit_firstname_input);
         editLicensePlate = findViewById(R.id.edit_license_plate_input);
-        buttonEditName = findViewById(R.id.button_edit_name);
-        buttonEditLicensePlate = findViewById(R.id.button_edit_license_plate);
+//        buttonEditName = findViewById(R.id.button_edit_name);
+//        buttonEditLicensePlate = findViewById(R.id.button_edit_license_plate);
         buttonResetPassword = findViewById(R.id.button_reset_password);
-        buttonSkip = findViewById(R.id.button_skip);
-        textViewForgotPassword = findViewById(R.id.text_forgot_password);
-        forgotPasswordHorizontalLine = findViewById(R.id.view3);
+        buttonDone = findViewById(R.id.button_done);
+        buttonCancel = findViewById(R.id.button_cancel);
+//        buttonSkip = findViewById(R.id.button_skip);
+//s
+//        forgotPasswordHorizontalLine = findViewById(R.id.view3);
 
         // user logged in from Google cannot update password in our platform
         for (UserInfo user : firebaseAuth.getCurrentUser().getProviderData()) {
             if (user.getProviderId().equals("google.com")) {
                 buttonResetPassword.setVisibility(View.GONE);
-                textViewForgotPassword.setVisibility(View.GONE);
-                forgotPasswordHorizontalLine.setVisibility(View.GONE);
+//                textViewForgotPassword.setVisibility(View.GONE);
+//                forgotPasswordHorizontalLine.setVisibility(View.GONE);
             }
         }
 
-        buttonEditName.setOnClickListener(this);
-        buttonEditLicensePlate.setOnClickListener(this);
+//        buttonEditName.setOnClickListener(this);
+//        buttonEditLicensePlate.setOnClickListener(this);
         buttonResetPassword.setOnClickListener(this);
-        buttonSkip.setOnClickListener(this);
+//        buttonSkip.setOnClickListener(this);
+        buttonCancel.setOnClickListener(this);
+        buttonDone.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.button_edit_name) editName();
-        if (i == R.id.button_edit_license_plate) editLicensePlate();
+//        if (i == R.id.button_edit_name) editName();
+//        if (i == R.id.button_edit_license_plate) editLicensePlate();
         if (i == R.id.button_reset_password) {
             startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
+        } else if (i == R.id.button_done) {
+            editName();
+            editLicensePlate();
+            finish();
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        } else if (i == R.id.button_cancel) {
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
         }
-        if (i == R.id.button_skip) {
-            startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
-        }
+//        if (i == R.id.button_skip) {
+//            startActivity(new Intent(getApplicationContext(), HomepageActivity.class));
+//        }
     }
 }

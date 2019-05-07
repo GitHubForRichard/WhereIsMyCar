@@ -28,6 +28,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button buttonUpdateUserInfo;
     private Button buttonLogout;
 
+//    private ImageView imageViewUpdateUserInfo;
+
     private DatabaseReference databaseReference;
 
     @Override
@@ -73,15 +75,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initializeUI() {
 
-        textEmail = findViewById(R.id.text_forgot_password);
+        textEmail = findViewById(R.id.text_email);
         textLicensePlate = findViewById(R.id.text_license_plate);
         textFirstname = findViewById(R.id.text_first_name);
         textLastname = findViewById(R.id.text_last_name);
 
         buttonUpdateUserInfo = findViewById(R.id.button_update_user_info);
+//        imageViewUpdateUserInfo = findViewById(R.id.imageView_update_user_info);
         buttonLogout = findViewById(R.id.button_log_out);
 
         buttonUpdateUserInfo.setOnClickListener(this);
+//        imageViewUpdateUserInfo.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
         /*
@@ -105,5 +109,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             finish();
             startActivity(new Intent(getApplicationContext(), UpdateUserInfoActivity.class));
         }
+//        else if (i == R.id.imageView_update_user_info) {
+//            finish();
+//            startActivity(new Intent(getApplicationContext(), UpdateUserInfoActivity.class));
+//        }
     }
 }

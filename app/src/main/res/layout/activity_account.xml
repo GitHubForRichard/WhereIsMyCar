@@ -6,52 +6,330 @@
     android:layout_height="match_parent"
     tools:context=".AccountActivity">
 
-    <ImageView
-        android:id="@+id/image_background"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sjsu_background_landscape"
         android:foreground="#B4DACDCD"
-        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
+
+    <!--<ImageView-->
+    <!--android:id="@+id/image_background"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:scaleType="fitXY"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.0"-->
+    <!--app:srcCompat="@drawable/sjsu_background" />-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/linearLayout"-->
+    <!--android:layout_width="337dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:orientation="vertical"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/image_background"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/image_background"-->
+    <!--app:layout_constraintVertical_bias="0.3">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_sign_in"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Sign In" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_sign_up"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Sign Up" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_help"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Help?" />-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--<android.support.constraint.ConstraintLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@drawable/Gradient"-->
+    <!--tools:context=".AccountActivity"-->
+    <!--tools:layout_editor_absoluteX="-156dp"-->
+    <!--tools:layout_editor_absoluteY="-29dp">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/image_background"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:scaleType="fitXY"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.0"-->
+    <!--app:srcCompat="@drawable/sjsu_background" />-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/linearLayout"-->
+    <!--android:layout_width="337dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:orientation="vertical"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/image_background"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/image_background"-->
+    <!--app:layout_constraintVertical_bias="0.3">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_sign_in"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Sign In" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_sign_up"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Sign Up" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_help"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:text="Help?" />-->
+
+    <!--</LinearLayout>-->
+
+
+    <Button
+        android:id="@+id/button_help"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
+        android:radius="100dp"
+        android:text="More Information"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_or"
+        app:layout_constraintVertical_bias="0.026" />
+
+    <View
+        android:id="@+id/divider_right"
+        android:layout_width="160dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="2dp"
+        android:background="#202832"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView_or"
+        app:layout_constraintTop_toBottomOf="@+id/button_sign_up" />
+
+    <TextView
+        android:id="@+id/TextView_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="Welcome"
+        android:textAlignment="center"
+        android:textColor="#202832"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView_title2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="48dp"-->
+    <!--android:fontFamily="sans-serif-condensed-medium"-->
+    <!--android:text="Welcome to WhereIsMyCar"-->
+    <!--android:textColor="#202832"-->
+    <!--android:textSize="32sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.492"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button_help"-->
+    <!--android:layout_width="300dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="#202832"-->
+    <!--android:radius="100dp"-->
+    <!--android:text="More Information"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.495"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--tools:layout_editor_absoluteY="440dp" />-->
+
+    <Button
+        android:id="@+id/button_sign_up"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorPrimary"
+        android:radius="100dp"
+        android:text="Sign Up"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
+
+    <Button
+        android:id="@+id/button_sign_in"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorPrimary"
+        android:radius="100dp"
+        android:text="Log In"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_subtitle" />
+
+    <TextView
+        android:id="@+id/textView_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Select a way to start: "
+        android:textColor="#202832"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_title" />
+
+    <View
+        android:id="@+id/divider_left"
+        android:layout_width="160dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
+        android:background="#202832"
+        app:layout_constraintEnd_toStartOf="@+id/textView_or"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/sjsu_background" />
+        app:layout_constraintTop_toBottomOf="@+id/button_sign_up" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="337dp"
+    <TextView
+        android:id="@+id/textView_or"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="36dp"
+        android:text="or"
+        android:textColor="#202832"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/image_background"
-        app:layout_constraintTop_toTopOf="@+id/image_background"
-        app:layout_constraintVertical_bias="0.3">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_sign_up" />
 
-        <Button
-            android:id="@+id/button_sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Sign In" />
+    <!--</android.support.constraint.ConstraintLayout>-->
 
-        <Button
-            android:id="@+id/button_sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Sign Up" />
+    <!--<TextView-->
+    <!--android:id="@+id/TextView_title"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="48dp"-->
+    <!--android:fontFamily="sans-serif-condensed-medium"-->
+    <!--android:text="Welcome to WhereIsMyCar"-->
+    <!--android:textColor="#202832"-->
+    <!--android:textSize="32sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.492"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-        <Button
-            android:id="@+id/button_help"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Help?" />
+    <!--<TextView-->
+    <!--android:id="@+id/textView_title2"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="48dp"-->
+    <!--android:fontFamily="sans-serif-condensed-medium"-->
+    <!--android:text="Welcome to WhereIsMyCar"-->
+    <!--android:textColor="#202832"-->
+    <!--android:textSize="32sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.492"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    </LinearLayout>
+    <!--<Button-->
+    <!--android:id="@+id/button_sign_up"-->
+    <!--android:layout_width="300dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:background="#202832"-->
+    <!--android:radius="100dp"-->
+    <!--android:text="Button"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.495"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--tools:layout_editor_absoluteY="208dp"-->
+    <!--tools:text="Sign Up" />-->
 
+    <!--<TextView-->
+    <!--android:id="@+id/textView_subtitle"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Select a way to start: "-->
+    <!--android:textColor="#202832"-->
+    <!--android:textSize="20dp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--tools:layout_editor_absoluteY="118dp" />-->
+
+    <!--<View-->
+    <!--android:id="@+id/divider_left"-->
+    <!--android:layout_width="180dp"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="#202832"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--tools:layout_editor_absoluteY="390dp" />-->
 
 </android.support.constraint.ConstraintLayout>

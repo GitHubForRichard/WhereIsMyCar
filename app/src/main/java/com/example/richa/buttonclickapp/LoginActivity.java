@@ -133,9 +133,13 @@ public class LoginActivity extends AppCompatActivity implements
 
         buttonMaps = findViewById(R.id.imgButton_maps);
         buttonMaps.setImageResource(R.drawable.google_icon);
+
+        textViewSignup = findViewById(R.id.textView_sign_up_reminder);
+
         buttonAccount.setOnClickListener(this);
         buttonSearch.setOnClickListener(this);
         buttonMaps.setOnClickListener(this);
+        textViewSignup.setOnClickListener(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,6 +154,11 @@ public class LoginActivity extends AppCompatActivity implements
             // Button for Google Maps
         else if (i == R.id.imgButton_maps)
             startActivity(new Intent(getApplicationContext(), MapsActivity.class));
+        else if (i == R.id.textView_sign_up_reminder) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////

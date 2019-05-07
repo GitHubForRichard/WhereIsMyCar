@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.richa.buttonclickapp.Object.UserAccount;
@@ -28,6 +31,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private EditText etEmail;
     private EditText etPassword;
+    private EditText etConfirmPassword;
+
+    private TextView textViewPasswordNotMatch;
+    private TextView textViewLoginReminder;
 
     private ProgressDialog progressDialog;
 
@@ -50,9 +57,46 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnCancel = findViewById(R.id.button_cancel);
         etEmail = findViewById(R.id.edit_email);
         etPassword = findViewById(R.id.edit_password);
+        etConfirmPassword = findViewById(R.id.edit_confirm_password);
+        textViewPasswordNotMatch = findViewById(R.id.textView_password_not_match);
+        textViewLoginReminder = findViewById(R.id.textView_login_reminder);
+
+        textViewPasswordNotMatch.setVisibility(View.GONE);
 
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        textViewLoginReminder.setOnClickListener(this);
+
+        etConfirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String password = etPassword.getText().toString().trim();
+                String confirmPassword = etConfirmPassword.getText().toString().trim();
+
+                System.out.println("Checking Password ad confirmed password .................");
+
+                if (password.length() > 0) {
+                    if (!confirmPassword.equals(password)) {
+                        // give an error that password and confirm password not match
+                        System.out.println("Passwords do not match!");
+                        textViewPasswordNotMatch.setVisibility(View.VISIBLE);
+                    } else {
+                        textViewPasswordNotMatch.setVisibility(View.GONE);
+                    }
+
+                }
+            }
+        });
     }
 
     private void initializeFirebase() {
@@ -132,6 +176,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         } else if (i == R.id.button_cancel) {
             finish();
             startActivity(new Intent(this, HomepageActivity.class));
+        } else if (i == R.id.textView_login_reminder) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
         }
     }
 }

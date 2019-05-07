@@ -78,10 +78,15 @@
     <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <FrameLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/sjsu_background_landscape"
-        android:foreground="#B4DACDCD">
+        android:foreground="#B4DACDCD"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 
@@ -90,119 +95,126 @@
         android:layout_width="105dp"
         android:layout_height="29dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
         android:text="SIGN UP"
         android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="#202832"
         android:textColorHighlight="@color/common_google_signin_btn_text_dark_focused"
         android:textColorHint="@color/common_google_signin_btn_text_dark_focused"
         android:textColorLink="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_email_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:text="Email:"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_sign_up" />
 
     <EditText
         android:id="@+id/edit_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="Enter Your Email"
+        android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textColor="#070707"
-        android:textColorHighlight="#070707"
-        android:textColorHint="#070707"
-        android:textColorLink="#070707"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#202832"
+        android:textColorHighlight="#202832"
+        android:textColorHint="#202832"
+        android:textColorLink="#202832"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_email_input"
-        app:layout_constraintVertical_bias="0.045" />
-
-    <TextView
-        android:id="@+id/text_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="Password:"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+        app:layout_constraintTop_toBottomOf="@+id/text_sign_up" />
 
     <EditText
         android:id="@+id/edit_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Enter Your Password"
+        android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textColorHighlight="@color/common_google_signin_btn_text_dark_focused"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_focused"
-        android:textColorLink="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="#202832"
+        android:textColorHighlight="#202832"
+        android:textColorHint="#202832"
+        android:textColorLink="#202832"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_password" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+
+    <EditText
+        android:id="@+id/edit_confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:textColor="#202832"
+        android:textColorHighlight="#202832"
+        android:textColorHint="#202832"
+        android:textColorLink="#202832"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_password" />
 
     <Button
         android:id="@+id/button_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/common_google_signin_btn_text_dark_focused"
-        android:text="Submit"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="30dp"
+        android:background="#C8963E"
+        android:text="Log In"
         android:textColor="@color/common_google_signin_btn_text_dark_pressed"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_cancel"
-        app:layout_constraintHorizontal_bias="0.46"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_password"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_password_not_match" />
 
     <Button
         android:id="@+id/button_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="80dp"
         android:background="#aa3d3d"
         android:text="Cacnel"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_password"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_password_not_match" />
+
+    <TextView
+        android:id="@+id/textView_password_not_match"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Passwords do not match"
+        android:textColor="#aa3d3d"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_confirm_password"
+        app:layout_constraintVertical_bias="0.134" />
+
+    <TextView
+        android:id="@+id/textView_login_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Already had an account? Log In"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.959"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_confirm_password" />
 
 </android.support.constraint.ConstraintLayout>
