@@ -7,99 +7,101 @@
     tools:context=".RegisterActivity">
 
     <!--<Button-->
-        <!--android:id="@+id/Register"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="80dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:text="Register"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.0"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/Login" />-->
+    <!--android:id="@+id/Register"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="80dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="Register"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/Login" />-->
 
     <!--<EditText-->
-        <!--android:id="@+id/Email"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:ems="10"-->
-        <!--android:hint="Email"-->
-        <!--android:inputType="textEmailAddress"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.0"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/Title" />-->
+    <!--android:id="@+id/Email"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:ems="10"-->
+    <!--android:hint="Email"-->
+    <!--android:inputType="textEmailAddress"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/Title" />-->
 
     <!--<EditText-->
-        <!--android:id="@+id/Password"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_marginTop="56dp"-->
-        <!--android:ems="10"-->
-        <!--android:hint="Password"-->
-        <!--android:inputType="numberPassword"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.0"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/Email" />-->
+    <!--android:id="@+id/Password"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="56dp"-->
+    <!--android:ems="10"-->
+    <!--android:hint="Password"-->
+    <!--android:inputType="numberPassword"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/Email" />-->
 
     <!--<TextView-->
-        <!--android:id="@+id/Login"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:text="Already have account? Log in"-->
-        <!--android:textAlignment="center"-->
-        <!--android:textSize="18sp"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.0"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/Password" />-->
+    <!--android:id="@+id/Login"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:text="Already have account? Log in"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textSize="18sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/Password" />-->
 
     <!--<TextView-->
-        <!--android:id="@+id/Title"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_marginTop="16dp"-->
-        <!--android:text="Sign Up"-->
-        <!--android:textSize="30sp"-->
-        <!--android:textStyle="bold"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
+    <!--android:id="@+id/Title"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginEnd="16dp"-->
+    <!--android:layout_marginStart="16dp"-->
+    <!--android:layout_marginTop="16dp"-->
+    <!--android:text="Sign Up"-->
+    <!--android:textSize="30sp"-->
+    <!--android:textStyle="bold"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <ImageView
-        android:id="@+id/image_background"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sjsu_background" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/sjsu_background_landscape"
+        android:foreground="#B4DACDCD">
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/text_sign_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="105dp"
+        android:layout_height="29dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="124dp"
         android:layout_marginEnd="8dp"
         android:text="SIGN UP"
-        android:textColor="#A52A2A"
-        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorHighlight="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorLink="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,10 +110,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="EMAIL:"
-        android:textColor="#A52A2A"
-        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:text="Email:"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_sign_up" />
 
@@ -125,14 +128,17 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="Enter Your Email"
-
         android:inputType="textEmailAddress"
+        android:textColor="#070707"
+        android:textColorHighlight="#070707"
+        android:textColorHint="#070707"
+        android:textColorLink="#070707"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_email_input"
-        app:layout_constraintVertical_bias="0.014" />
+        app:layout_constraintVertical_bias="0.045" />
 
     <TextView
         android:id="@+id/text_password"
@@ -141,8 +147,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:text="Password:"
-        android:textColor="#A52A2A"
-        android:textSize="18sp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
@@ -156,6 +163,10 @@
         android:ems="10"
         android:hint="Enter Your Password"
         android:inputType="textPassword"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorHighlight="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorLink="@color/common_google_signin_btn_text_dark_focused"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,7 +180,9 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/common_google_signin_btn_text_dark_focused"
         android:text="Submit"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_cancel"
         app:layout_constraintHorizontal_bias="0.46"
@@ -184,7 +197,9 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="8dp"
+        android:background="#aa3d3d"
         android:text="Cacnel"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_password"
