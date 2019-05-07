@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,10 +23,10 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
     private EditText editFirstname;
     private EditText editLastname;
     private EditText editLicensePlate;
-//    private Button buttonEditName;
+    //    private Button buttonEditName;
 //    private Button buttonEditLicensePlate;
     private Button buttonResetPassword;
-//    private Button buttonSkip;
+    //    private Button buttonSkip;
     private Button buttonDone;
     private Button buttonCancel;
 
@@ -142,14 +141,12 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
 //        if (i == R.id.button_edit_license_plate) editLicensePlate();
         if (i == R.id.button_reset_password) {
             startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
-        }
-        else if(i == R.id.button_done){
+        } else if (i == R.id.button_done) {
             editName();
             editLicensePlate();
             finish();
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-        }
-        else if(i == R.id.button_cancel){
+        } else if (i == R.id.button_cancel) {
             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
         }
 //        if (i == R.id.button_skip) {

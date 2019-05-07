@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C8963E"
     android:orientation="vertical">
 
 
@@ -16,6 +17,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="31dp"
         android:layout_marginEnd="0dp"
+        android:background="#C8963E"
         android:text="Search History"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -25,12 +27,14 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="#C8963E" />
 
 
     <Button
         android:id="@+id/button_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#aa3d3d"
         android:text="Cancel" />
 </LinearLayout>

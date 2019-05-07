@@ -11,13 +11,14 @@
         android:layout_height="324dp"
         android:adjustViewBounds="true"
         android:background="@drawable/grad"
-        tools:layout_editor_absoluteX="-2dp"
-        tools:layout_editor_absoluteY="-7dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_update_user_info"
-        android:layout_width="37dp"
-        android:layout_height="40dp"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:background="@android:color/transparent"
@@ -29,7 +30,7 @@
         android:id="@+id/imageView_user_icon"
         android:layout_width="47dp"
         android:layout_height="40dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="104dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_empty_license_plate"
@@ -54,7 +55,7 @@
     <TextView
         android:id="@+id/text_email"
         android:layout_width="265dp"
-        android:layout_height="21dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
@@ -63,7 +64,7 @@
         android:textColor="#202832"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView_email_icon"
         app:layout_constraintTop_toBottomOf="@+id/text_first_name" />
 
@@ -98,7 +99,7 @@
     <TextView
         android:id="@+id/text_first_name"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="112dp"
         android:text="First Name"
@@ -112,7 +113,7 @@
     <TextView
         android:id="@+id/text_last_name"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="112dp"
         android:layout_marginEnd="16dp"
@@ -129,7 +130,7 @@
         android:id="@+id/button_log_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="32dp"
         android:background="#aa3d3d"
         android:text="Log out"
         android:textColor="@android:color/white"
@@ -143,9 +144,7 @@
         android:id="@+id/imageView_email_icon"
         android:layout_width="47dp"
         android:layout_height="40dp"
-        android:layout_marginStart="80dp"
-        app:layout_constraintEnd_toStartOf="@+id/text_email"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_user_icon"
         app:srcCompat="@drawable/email_icon" />

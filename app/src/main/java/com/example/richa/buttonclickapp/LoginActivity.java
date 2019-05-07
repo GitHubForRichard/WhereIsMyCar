@@ -154,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements
             // Button for Google Maps
         else if (i == R.id.imgButton_maps)
             startActivity(new Intent(getApplicationContext(), MapsActivity.class));
-        else if(i == R.id.textView_sign_up_reminder){
+        else if (i == R.id.textView_sign_up_reminder) {
             finish();
             startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
 

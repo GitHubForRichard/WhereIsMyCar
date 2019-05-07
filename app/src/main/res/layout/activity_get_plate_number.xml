@@ -8,6 +8,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:foreground="#B4DACDCD"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +25,8 @@
         android:layout_marginEnd="171dp"
         android:text="Enter Plate Number:"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,17 +43,21 @@
         android:hint="Example: 7GW3F9"
         android:inputType="textCapWords|textCapCharacters"
         android:textAlignment="center"
+        android:textColor="#202832"
+        android:textColorHighlight="#202832"
+        android:textColorLink="#202832"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text" />
 
     <Button
         android:id="@+id/button_find_my_car"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="116dp"
+        android:layout_height="50dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
+        android:background="#C8963E"
         android:text="Find My Car"
         app:layout_constraintEnd_toStartOf="@+id/button_search_history"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,10 +65,11 @@
 
     <Button
         android:id="@+id/button_search_history"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_width="142dp"
+        android:layout_height="50dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="56dp"
+        android:background="#C8963E"
         android:text="Search History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_plate" />
@@ -88,7 +95,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="84dp"
-        android:background="@color/common_google_signin_btn_text_dark_focused"
+        android:background="#906b29"
         android:text="Submit"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,10 +103,12 @@
 
     <Button
         android:id="@+id/button_upload_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="142dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="56dp"
+        android:height="50dp"
+        android:background="#C8963E"
         android:text="Upload Image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_submit" />

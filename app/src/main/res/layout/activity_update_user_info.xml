@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateUserInfoActivity"
-    android:background="@drawable/grad">
-
+    android:background="@drawable/grad"
+    tools:context=".UpdateUserInfoActivity">
 
 
     <TextView
@@ -14,12 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="140dp"
         android:text="Update Profile"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +27,10 @@
 
     <EditText
         android:id="@+id/edit_lastname_input"
-        android:layout_width="125dp"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="39dp"
         android:hint="Last Name"
         android:inputType="textPersonName"
         android:textColorHint="@color/colorPrimaryDark"
@@ -41,35 +41,30 @@
 
     <EditText
         android:id="@+id/edit_firstname_input"
-        android:layout_width="125dp"
+        android:layout_width="135dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:hint="First Name"
         android:inputType="textPersonName"
         android:textColorHint="@color/colorPrimaryDark"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/edit_lastname_input"
-        app:layout_constraintHorizontal_bias="0.655"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_user_account" />
 
     <EditText
         android:id="@+id/edit_license_plate_input"
-        android:layout_width="277dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:hint="License Plate"
         android:inputType="textCapWords"
         android:textAlignment="viewStart"
         android:textColorHint="@color/colorPrimaryDark"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_lastname_input" />
 
@@ -79,16 +74,14 @@
         android:layout_width="127dp"
         android:layout_height="37dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@color/colorPrimaryDark"
         android:text="Reset Password"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_license_plate_input"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_license_plate_input" />
 
     <Button
         android:id="@+id/button_done"
@@ -131,8 +124,6 @@
         app:layout_constraintEnd_toStartOf="@+id/button_cancel"
         app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="@+id/button_cancel" />
-
-
 
 
 </android.support.constraint.ConstraintLayout>

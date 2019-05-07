@@ -86,13 +86,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 System.out.println("Checking Password ad confirmed password .................");
 
                 if (password.length() > 0) {
-                    if(!confirmPassword.equals(password)){
+                    if (!confirmPassword.equals(password)) {
                         // give an error that password and confirm password not match
                         System.out.println("Passwords do not match!");
                         textViewPasswordNotMatch.setVisibility(View.VISIBLE);
-                    }
-                    else
-                    {
+                    } else {
                         textViewPasswordNotMatch.setVisibility(View.GONE);
                     }
 
@@ -178,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         } else if (i == R.id.button_cancel) {
             finish();
             startActivity(new Intent(this, HomepageActivity.class));
-        } else if(i == R.id.textView_login_reminder){
+        } else if (i == R.id.textView_login_reminder) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
